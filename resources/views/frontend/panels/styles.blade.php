@@ -6,6 +6,7 @@
 <link href="{{ asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/header.scss2c6f.css?1697597694844') }}" rel="stylesheet" type="text/css" media="all" />
 <link rel="preload" as='style' type="text/css" href="{{ asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/index.scss2c6f.css?1697597694844') }}">
 <link href="{{ asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/index.scss2c6f.css?1697597694844') }}" rel="stylesheet" type="text/css" media="all" />
+<link href="{{ asset('themes/frontend/watches/cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css') }}" rel="stylesheet" type="text/css" media="all" />
 
 
 <script src="{{ asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/jquery2c6f.js?1697597694844') }}" type="text/javascript"></script>

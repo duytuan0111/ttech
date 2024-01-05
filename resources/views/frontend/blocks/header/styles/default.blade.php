@@ -9,7 +9,12 @@
             </a>
             
           </div>
-          <div class="col-lg-9 col-xl-8 col-md-6 col-12 col-search order-3 order-md-2">
+          <div class="d-lg-none d-block col-2 order-3 menumobilebutton">
+            <div class="category-action">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="iconcate-action" x="0px" y="0px" viewBox="0 0 384.97 384.97" style="enable-background:new 0 0 384.97 384.97;" xml:space="preserve"> <g> <g id="Menu_1_"> <path d="M12.03,120.303h360.909c6.641,0,12.03-5.39,12.03-12.03c0-6.641-5.39-12.03-12.03-12.03H12.03    c-6.641,0-12.03,5.39-12.03,12.03C0,114.913,5.39,120.303,12.03,120.303z"/> <path d="M372.939,180.455H12.03c-6.641,0-12.03,5.39-12.03,12.03s5.39,12.03,12.03,12.03h360.909c6.641,0,12.03-5.39,12.03-12.03    S379.58,180.455,372.939,180.455z"/> <path d="M372.939,264.667H132.333c-6.641,0-12.03,5.39-12.03,12.03c0,6.641,5.39,12.03,12.03,12.03h240.606    c6.641,0,12.03-5.39,12.03-12.03C384.97,270.056,379.58,264.667,372.939,264.667z"/> </g> </g> </svg>
+            </div>
+          </div>
+          <div class="col-lg-8 col-xl-7 col-md-5 col-10 col-search order-3 order-md-2">
             <!-- search -->
             <div class="theme-search-smart">
               <div class="header_search theme-searchs">
@@ -61,7 +66,66 @@
           <div class="wrap_main d-flex">
             <div class="menu_mega indexs">
               <div class="title_menu">
-                <span class="title_">MENU</span>
+                <span class="title_">Danh mục sản phẩm</span>
+              </div>
+              <div class="list_menu_header col-lg-3 col-md-3">
+                <ul class="ul_menu site-nav-vetical">
+                  @php
+                    $params_taxonomy['status'] = App\Consts::TAXONOMY_STATUS['active'];
+                    $params_taxonomy['taxonomy'] = App\Consts::TAXONOMY['product'];
+                    $taxonomys = App\Http\Services\ContentService::getCmsTaxonomy($params_taxonomy)->get();
+                  @endphp
+                  @isset($taxonomys)
+                    @foreach ($taxonomys as $item)
+                      @if ($item->parent_id == 0 || $item->parent_id == null)
+                        @php
+                          $title = $item->json_params->title->{$locale} ?? $item->title;
+                          $brief = $item->json_params->brief->{$locale} ?? $item->brief;
+                          $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $title, $item->id);
+                          $image= $item->json_params->image != '' ? $item->json_params->image : null;
+                          $image_background = $item->json_params->image_background != '' ? $item->json_params->image_background : $web_information->image->Image_home_sidebar ?? '';
+
+                          $taxonomys_childs = $taxonomys->filter(function ($it, $key) use ($item) {
+                              return $it->parent_id == $item->id;
+                          });
+                        @endphp
+                        <li class="nav_item lev-1 lv1 li_check">
+                          <a class="lazyload" style="background-image: url('{{ $image }}');" href="{{ $alias_category }}" title="{{ $title }}">
+                            {{ $title }}
+                            @if(count($taxonomys_childs)!=0)
+                            <i class="fa fa-angle-right"></i>
+                            @endif
+                          </a>
+                          <i class="fa fa-angle-down"></i>
+                          @if(count($taxonomys_childs)!=0)
+                          <ul class="ul_content_right_1 row">
+                            @foreach ($taxonomys_childs as $item_child)
+                            @php
+                              $title_child = $item_child->json_params->title->{$locale} ?? $item_child->title;
+                              $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $title_child, $item_child->id);
+                            @endphp
+                            <li class="nav_item has-subnav lv2 col-lg-3 col-md-12">
+                              <h4 class="text-normal">
+                                
+                                <a href="javascript:;" title="Giảm giá cực hot" data-src="//bizweb.dktcdn.net/100/429/689/themes/869367/assets/firex.png?1697597694844" class="lazyload hot">Giảm giá cực hot</a>
+                              </h4>
+                              <ul class="ul_content_right_2">
+                                
+                                
+                                <li class="nav_item lv3">
+                                  <a href="iphone-12-va-hang-loat-flagship-dang-giam-gia-cuc-manh.html" title="iPhone 12 và hàng loạt flagship đang giảm giá cực mạnh">iPhone 12 và hàng loạt flagship đang giảm giá cực mạnh</a>
+                                </li>
+                                
+                              </ul>
+                            </li>
+                            @endforeach
+                          </ul>
+                          @endif
+                        </li>
+                      @endif  
+                    @endforeach    
+                  @endisset
+                </ul>
               </div>
             </div>
             <div class="bg-header-nav">
