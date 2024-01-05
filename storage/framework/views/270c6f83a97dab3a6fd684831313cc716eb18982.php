@@ -9,7 +9,12 @@
             </a>
             
           </div>
-          <div class="col-lg-9 col-xl-8 col-md-6 col-12 col-search order-3 order-md-2">
+          <div class="d-lg-none d-block col-2 order-3 menumobilebutton">
+            <div class="category-action">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="iconcate-action" x="0px" y="0px" viewBox="0 0 384.97 384.97" style="enable-background:new 0 0 384.97 384.97;" xml:space="preserve"> <g> <g id="Menu_1_"> <path d="M12.03,120.303h360.909c6.641,0,12.03-5.39,12.03-12.03c0-6.641-5.39-12.03-12.03-12.03H12.03    c-6.641,0-12.03,5.39-12.03,12.03C0,114.913,5.39,120.303,12.03,120.303z"/> <path d="M372.939,180.455H12.03c-6.641,0-12.03,5.39-12.03,12.03s5.39,12.03,12.03,12.03h360.909c6.641,0,12.03-5.39,12.03-12.03    S379.58,180.455,372.939,180.455z"/> <path d="M372.939,264.667H132.333c-6.641,0-12.03,5.39-12.03,12.03c0,6.641,5.39,12.03,12.03,12.03h240.606    c6.641,0,12.03-5.39,12.03-12.03C384.97,270.056,379.58,264.667,372.939,264.667z"/> </g> </g> </svg>
+            </div>
+          </div>
+          <div class="col-lg-8 col-xl-7 col-md-5 col-10 col-search order-3 order-md-2">
             <!-- search -->
             <div class="theme-search-smart">
               <div class="header_search theme-searchs">
@@ -61,7 +66,119 @@
           <div class="wrap_main d-flex">
             <div class="menu_mega indexs">
               <div class="title_menu">
-                <span class="title_">MENU</span>
+                <span class="title_">Danh mục sản phẩm</span>
+              </div>
+              <div class="list_menu_header col-lg-3 col-md-3">
+                <ul class="ul_menu site-nav-vetical">
+                  <?php
+                    $params_taxonomy['status'] = App\Consts::TAXONOMY_STATUS['active'];
+                    $params_taxonomy['taxonomy'] = App\Consts::TAXONOMY['product'];
+                    $taxonomys = App\Http\Services\ContentService::getCmsTaxonomy($params_taxonomy)->get();
+                  ?>
+                  <?php if(isset($taxonomys)): ?>
+                    <?php $__currentLoopData = $taxonomys; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <?php if($item->parent_id == 0 || $item->parent_id == null): ?>
+                        <?php
+                          $title = $item->json_params->title->{$locale} ?? $item->title;
+                          $brief = $item->json_params->brief->{$locale} ?? $item->brief;
+                          $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $title, $item->id);
+                          $image= $item->json_params->image != '' ? $item->json_params->image : null;
+                          $image_background = $item->json_params->image_background != '' ? $item->json_params->image_background : $web_information->image->Image_home_sidebar ?? '';
+
+                          $taxonomys_childs = $taxonomys->filter(function ($it, $key) use ($item) {
+                              return $it->parent_id == $item->id;
+                          });
+                        ?>
+                        <li class="nav_item lev-1 lv1 li_check">
+                          <a class="lazyload" style="background-image: url('<?php echo e($image); ?>');" href="<?php echo e($alias_category); ?>" title="<?php echo e($title); ?>">
+                            <?php echo e($title); ?>
+
+                            <?php if(count($taxonomys_childs)!=0): ?>
+                            <i class="fa fa-angle-right"></i>
+                            <?php endif; ?>
+                          </a>
+                          <i class="fa fa-angle-down"></i>
+                          <ul class="ul_content_right_1 row">
+                            
+                            <li class="nav_item has-subnav lv2 col-lg-3 col-md-12">
+                              <h4 class="text-normal">
+                                
+                                <a href="javascript:;" title="Giảm giá cực hot" data-src="//bizweb.dktcdn.net/100/429/689/themes/869367/assets/firex.png?1697597694844" class="lazyload hot">Giảm giá cực hot</a>
+                              </h4>
+                              <ul class="ul_content_right_2">
+                                
+                                
+                                <li class="nav_item lv3">
+                                  <a href="iphone-12-va-hang-loat-flagship-dang-giam-gia-cuc-manh.html" title="iPhone 12 và hàng loạt flagship đang giảm giá cực mạnh">iPhone 12 và hàng loạt flagship đang giảm giá cực mạnh</a>
+                                </li>
+                                
+                              </ul>
+                            </li>
+                            
+                            
+                            
+                            <li class="nav_item lv2 col-lg-3 col-md-12">
+                              <h4>
+                                <a href="apple.html" title="Apple">Apple</a>
+                              </h4>
+                              <ul class="ul_content_right_2">
+                                
+                                <li class="nav_item lv3"><a href="iphone-x.html" title="iPhone X">iPhone X</a></li>
+                                
+                                <li class="nav_item lv3"><a href="iphone-11.html" title="iPhone 11">iPhone 11</a></li>
+                                
+                                <li class="nav_item lv3"><a href="iphone-12-mini.html" title="iPhone 12 mini">iPhone 12 mini</a></li>
+                                
+                                <li class="nav_item lv3"><a href="iphone-12-pro-max.html" title="iPhone 12 Pro Max">iPhone 12 Pro Max</a></li>
+                                
+                              </ul>
+                            </li>
+                            
+                            
+                            
+                            <li class="nav_item lv2 col-lg-3 col-md-12">
+                              <h4>
+                                <a href="samsung.html" title="Samsung">Samsung</a>
+                              </h4>
+                              <ul class="ul_content_right_2">
+                                
+                                <li class="nav_item lv3"><a href="collections/all.html" title="Samsung Galaxy A">Samsung Galaxy A</a></li>
+                                
+                                <li class="nav_item lv3"><a href="collections/all.html" title="Samsung Galaxy Note">Samsung Galaxy Note</a></li>
+                                
+                                <li class="nav_item lv3"><a href="index.html" title="Samsung Galaxy Ultra">Samsung Galaxy Ultra</a></li>
+                                
+                                <li class="nav_item lv3"><a href="collections/all.html" title="Samsung Galaxy S">Samsung Galaxy S</a></li>
+                                
+                              </ul>
+                            </li>
+                            
+                            
+                            
+                            <li class="nav_item lv2 col-lg-3 col-md-12">
+                              <h4>
+                                <a href="xiaomi.html" title="Xiaomi">Xiaomi</a>
+                              </h4>
+                              <ul class="ul_content_right_2">
+                                
+                                <li class="nav_item lv3"><a href="collections/all.html" title="Xiaomi Mi 10">Xiaomi Mi 10</a></li>
+                                
+                                <li class="nav_item lv3"><a href="collections/all.html" title="Xiaomi Mi Max">Xiaomi Mi Max</a></li>
+                                
+                                <li class="nav_item lv3"><a href="collections/all.html" title="Xiaomi Poco Phone">Xiaomi Poco Phone</a></li>
+                                
+                                <li class="nav_item lv3"><a href="collections/all.html" title="Xiaomi Mi Note">Xiaomi Mi Note</a></li>
+                                
+                              </ul>
+                            </li>
+                            
+                            
+                          </ul>
+                        </li>
+                      <?php endif; ?>  
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>    
+                  <?php endif; ?>
+                </ul>
               </div>
             </div>
             <div class="bg-header-nav">

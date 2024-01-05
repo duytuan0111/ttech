@@ -15,7 +15,7 @@
                   @php
                     $title = $item_sub->json_params->title->{$locale} ?? $item_sub->title;
                     $brief = $item_sub->json_params->brief->{$locale} ?? $item_sub->brief;
-                     $image= $item_sub->json_params->image != '' ? $item_sub->json_params->image : null;
+                    $image= $item_sub->json_params->image != '' ? $item_sub->json_params->image : null;
                     $alias_category = App\Helpers::generateRoute($item_sub->taxonomy, $item_sub->alias ?? $item_sub->title, $item_sub->id);
                   @endphp
                   @if ($item_sub->parent_id == 0 || $item_sub->parent_id == null)
