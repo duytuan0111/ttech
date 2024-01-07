@@ -119,13 +119,15 @@
      $(".update-cart").change(function(e) {
        e.preventDefault();
        var ele = $(this);
+       var id = $(this).attr('data-id');
+       var quantity = $(this).val();
        $.ajax({
          url: '<?php echo e(route('frontend.order.cart.update')); ?>',
          method: "PATCH",
          data: {
            _token: '<?php echo e(csrf_token()); ?>',
-           id: ele.parents("tr").attr("data-id"),
-           quantity: ele.parents("tr").find(".qty").val()
+           id: id,
+           quantity: quantity
          },
          success: function(response) {
            window.location.reload();
@@ -142,7 +144,7 @@
            method: "DELETE",
            data: {
              _token: '<?php echo e(csrf_token()); ?>',
-             id: ele.parents("tr").attr("data-id")
+             id: $(this).attr("data-id")
            },
            success: function(response) {
              window.location.reload();

@@ -173,7 +173,7 @@ class Consts
             "show_route" => true
         ],
         [
-            "title" => "Đại lý",
+            "title" => "Thanh toán",
             "name" => "frontend.branch",
             "template" => [
                 [

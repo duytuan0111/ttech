@@ -36,12 +36,33 @@
                 </span>
               </div>
             </form>
-            
+            <div class="social-footer">
+              <div class="social-buttons">
+                <?php if(isset($web_information->social->facebook)): ?>
+                <a href="<?php echo e($web_information->social->facebook ?? 'https://facebook.com/'); ?>" class="social-button facebook" title="Theo dõi trên Facebook"><i class="fab fa-facebook-f"></i></a>
+                <?php endif; ?>
+
+                <?php if(isset($web_information->social->twitter)): ?>
+                <a href="<?php echo e($web_information->social->twitter ?? 'https://twitter.com/'); ?>" class="social-button twitter" title="Theo dõi trên Twitter"><i class="fab fa-twitter"></i></a>
+                <?php endif; ?>
+
+                <?php if(isset($web_information->social->gmail)): ?>
+                <a href="<?php echo e($web_information->social->gmail ?? 'https://gmail.com/'); ?>" class="social-button google" title="Theo dõi trên Google"><i class="fab fa-google"></i></a>
+                <?php endif; ?>
+                
+                <?php if(isset($web_information->social->youtube)): ?>
+                <a href="<?php echo e($web_information->social->youtube ?? 'https://youtube.com/'); ?>" class="social-button youtube" title="Theo dõi trên Youtube"><i class="fab fa-youtube"></i></a>
+                <?php endif; ?>
+              </div>
+            </div>
           </div>
           
         </div>
+
       </div>
+
     </div>
+
   </div>
   <div class="copyright d-flex">
     <div class="container">
@@ -89,7 +110,7 @@
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" id="iconcart" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512"><path d="m504.399 185.065c-6.761-8.482-16.904-13.348-27.83-13.348h-98.604l-53.469-122.433c-3.315-7.591-12.157-11.06-19.749-7.743-7.592 3.315-11.059 12.158-7.743 19.75l48.225 110.427h-178.458l48.225-110.427c3.315-7.592-.151-16.434-7.743-19.75-7.591-3.317-16.434.15-19.749 7.743l-53.469 122.434h-98.604c-10.926 0-21.069 4.865-27.83 13.348-6.637 8.328-9.086 19.034-6.719 29.376l52.657 230c3.677 16.06 17.884 27.276 34.549 27.276h335.824c16.665 0 30.872-11.216 34.549-27.276l52.657-230.001c2.367-10.342-.082-21.048-6.719-29.376zm-80.487 256.652h-335.824c-2.547 0-4.778-1.67-5.305-3.972l-52.657-229.998c-.413-1.805.28-3.163.936-3.984.608-.764 1.985-2.045 4.369-2.045h85.503l-3.929 8.997c-3.315 7.592.151 16.434 7.743 19.75 1.954.854 3.99 1.258 5.995 1.258 5.782 0 11.292-3.363 13.754-9l9.173-21.003h204.662l9.173 21.003c2.462 5.638 7.972 9 13.754 9 2.004 0 4.041-.404 5.995-1.258 7.592-3.315 11.059-12.158 7.743-19.75l-3.929-8.997h85.503c2.384 0 3.761 1.281 4.369 2.045.655.822 1.349 2.18.936 3.983l-52.657 230c-.528 2.301-2.76 3.971-5.307 3.971z"/><path d="m166 266.717c-8.284 0-15 6.716-15 15v110c0 8.284 6.716 15 15 15s15-6.716 15-15v-110c0-8.284-6.715-15-15-15z"/><path d="m256 266.717c-8.284 0-15 6.716-15 15v110c0 8.284 6.716 15 15 15s15-6.716 15-15v-110c0-8.284-6.716-15-15-15z"/><path d="m346 266.717c-8.284 0-15 6.716-15 15v110c0 8.284 6.716 15 15 15s15-6.716 15-15v-110c-.001-8.284-6.716-15-15-15z"/></svg>
         </div>
-        <a href="cart.html">Giỏ hàng</a>
+        <a href="<?php echo e(route('frontend.order.cart')); ?>">Giỏ hàng</a>
       </div>
     </div>
     <div class="itembar" onclick="location.href='blogs/all.html';">
@@ -97,7 +118,7 @@
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="iconblog" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <g> <g> <path d="M467,0H45C20.187,0,0,20.187,0,45v422c0,24.813,20.187,45,45,45h422c24.813,0,45-20.187,45-45V45    C512,20.187,491.813,0,467,0z M482,467c0,8.271-6.729,15-15,15H45c-8.271,0-15-6.729-15-15V150h452V467z M482,120H30V45    c0-8.271,6.729-15,15-15h422c8.271,0,15,6.729,15,15V120z"/> </g> </g> <g> <g> <circle cx="75" cy="75" r="15"/> </g> </g> <g> <g> <circle cx="135" cy="75" r="15"/> </g> </g> <g> <g> <circle cx="195" cy="75" r="15"/> </g> </g> <g> <g> <path d="M225,180H75c-8.284,0-15,6.716-15,15v122c0,8.284,6.716,15,15,15h150c8.284,0,15-6.716,15-15V195    C240,186.716,233.284,180,225,180z M210,302H90v-92h120V302z"/> </g> </g> <g> <g> <path d="M437,302H285c-8.284,0-15,6.716-15,15s6.716,15,15,15h152c8.284,0,15-6.716,15-15S445.284,302,437,302z"/> </g> </g> <g> <g> <path d="M437,241H285c-8.284,0-15,6.716-15,15s6.716,15,15,15h152c8.284,0,15-6.716,15-15S445.284,241,437,241z"/> </g> </g> <g> <g> <path d="M437,362H75c-8.284,0-15,6.716-15,15s6.716,15,15,15h362c8.284,0,15-6.716,15-15S445.284,362,437,362z"/> </g> </g> <g> <g> <path d="M437,422H75c-8.284,0-15,6.716-15,15s6.716,15,15,15h362c8.284,0,15-6.716,15-15S445.284,422,437,422z"/> </g> </g></svg>
         </div>
-        <a href="blogs/all.html">Tin tức</a>
+        <a href="/tin-tuc">Tin tức</a>
       </div>
     </div>
     
@@ -106,7 +127,7 @@
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="iconwishlist" x="0px" y="0px" viewBox="0 0 391.837 391.837" style="enable-background:new 0 0 391.837 391.837;" xml:space="preserve"> <g> <path style="fill:#D7443E;" d="M285.257,35.528c58.743,0.286,106.294,47.836,106.58,106.58   c0,107.624-195.918,214.204-195.918,214.204S0,248.165,0,142.108c0-58.862,47.717-106.58,106.58-106.58l0,0   c36.032-0.281,69.718,17.842,89.339,48.065C215.674,53.517,249.273,35.441,285.257,35.528z"></path> </g>                </svg>  
         </div>
-        <a href="yeu-thich.html">Yêu thích</a>
+        <a href="<?php echo e(route('frontend.contact')); ?>">Liên hệ</a>
       </div>
     </div>
     

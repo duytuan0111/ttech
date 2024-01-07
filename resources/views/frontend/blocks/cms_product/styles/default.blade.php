@@ -33,7 +33,12 @@
                   @php
                     $params['status'] = App\Consts::POST_STATUS['active'];
                     $params['is_type'] = App\Consts::POST_TYPE['product'];
-                    $params['taxonomy_id'] = $item->id;
+                    if ($item->sub_taxonomy_id != null) {
+                        $str_taxonomy_id = $item->id . ',' . $item->sub_taxonomy_id;
+                        $params['taxonomy_id'] = array_map('intval', explode(',', $str_taxonomy_id));
+                    } else {
+                        $params['taxonomy_id'] = $item->id;
+                    }
                     $rows = App\Http\Services\ContentService::getCmsPost($params)
                         ->limit(6)
                         ->get();
