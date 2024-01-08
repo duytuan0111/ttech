@@ -1,7 +1,8 @@
 <?php if($paginator->hasPages()): ?>
-  <ul class="pagination pagination-rounded pagination-lg mb-60">
-    
-    <?php if($paginator->onFirstPage()): ?>
+<div class="text-xs-right pageinate-page-blog section clearfix">
+  <nav class="clearfix relative nav_pagi f-right w_100">
+    <ul class="pagination clearfix">
+      <?php if($paginator->onFirstPage()): ?>
       <li class="page-item disabled" aria-disabled="true" aria-label="<?php echo app('translator')->get('pagination.previous'); ?>">
         <a class="page-link">
           <span aria-hidden="true">«</span>
@@ -52,6 +53,8 @@
         </a>
       </li>
     <?php endif; ?>
-  </ul>
-<?php endif; ?>
-<?php /**PATH E:\xampp\htdocs\ttech\resources\views/frontend/pagination/default.blade.php ENDPATH**/ ?>
+
+    </ul>
+  </nav>
+</div>
+<?php endif; ?><?php /**PATH E:\xampp\htdocs\ttech\resources\views/frontend/pagination/default.blade.php ENDPATH**/ ?>

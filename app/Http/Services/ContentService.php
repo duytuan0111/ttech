@@ -169,6 +169,67 @@ class ContentService
             ->when(!empty($params['alias']), function ($query) use ($params) {
                 return $query->where('tb_cms_posts.alias', $params['alias']);
             })
+            ->when(!empty($params['range_price']) && in_array(1, $params['range_price']), function ($query) use ($params) {
+                $query->orWhere(function ($subquery) {
+                    $subquery->whereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) >= ?', [0])
+                            ->WhereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) <= ?', [1000000]);
+                });
+            })
+            ->when(!empty($params['range_price']) && in_array(2, $params['range_price']), function ($query) use ($params) {
+                $query->orWhere(function ($subquery) {
+                    $subquery->whereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) >= ?', [1000000])
+                            ->WhereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) <= ?', [2000000]);
+                });
+            })
+            ->when(!empty($params['range_price']) && in_array(3, $params['range_price']), function ($query) use ($params) {
+                $query->orWhere(function ($subquery) {
+                    $subquery->whereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) >= ?', [2000000])
+                            ->WhereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) <= ?', [4000000]);
+                });
+            })
+            ->when(!empty($params['range_price']) && in_array(4, $params['range_price']), function ($query) use ($params) {
+                $query->orWhere(function ($subquery) {
+                    $subquery->whereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) >= ?', [4000000])
+                            ->WhereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) <= ?', [6000000]);
+                });
+            })
+            ->when(!empty($params['range_price']) && in_array(5, $params['range_price']), function ($query) use ($params) {
+                $query->orWhere(function ($subquery) {
+                    $subquery->whereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) >= ?', [6000000])
+                            ->WhereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) <= ?', [8000000]);
+                });
+            })
+            ->when(!empty($params['range_price']) && in_array(6, $params['range_price']), function ($query) use ($params) {
+                $query->orWhere(function ($subquery) {
+                    $subquery->whereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) >= ?', [8000000])
+                            ->WhereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) <= ?', [10000000]);
+                });
+            })
+            ->when(!empty($params['range_price']) && in_array(7, $params['range_price']), function ($query) use ($params) {
+                $query->orWhere(function ($subquery) {
+                    $subquery->whereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) >= ?', [10000000])
+                            ->WhereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) <= ?', [20000000]);
+                });
+            })
+            ->when(!empty($params['range_price']) && in_array(8, $params['range_price']), function ($query) use ($params) {
+                $query->orWhere(function ($subquery) {
+                    $subquery->whereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) >= ?', [20000000])
+                            ->WhereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) <= ?', [40000000]);
+                });
+            })
+            ->when(!empty($params['range_price']) && in_array(9, $params['range_price']), function ($query) use ($params) {
+                $query->orWhere(function ($subquery) {
+                    $subquery->whereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) >= ?', [40000000])
+                            ->WhereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) <= ?', [50000000]);
+                });
+            })
+            ->when(!empty($params['range_price']) && in_array(10, $params['range_price']), function ($query) use ($params) {
+                $query->orWhere(function ($subquery) {
+                    $subquery->whereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) >= ?', [50000000])
+                            ->WhereRaw('CAST(JSON_UNQUOTE(JSON_EXTRACT(`tb_cms_posts`.`json_params`, "$.price")) AS DECIMAL(10, 2)) <= ?', [999999999]);
+                });
+            })
+            
             ->when(!empty($params['different_id']), function ($query) use ($params) {
                 return $query->where('tb_cms_posts.id', '!=', $params['different_id']);
             })
