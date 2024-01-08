@@ -12,6 +12,9 @@
 <script src="<?php echo e(asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/jquery2c6f.js?1697597694844')); ?>" type="text/javascript"></script>
 <script src="<?php echo e(asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/swiper2c6f.js?1697597694844')); ?>" type="text/javascript"></script>
 <style>
+.bg-header-nav .header-nav>ul.item_big>li.nav-item{
+  padding-left: 20px;
+}
   .swal2-popup{
     overflow: hidden !important;
   }

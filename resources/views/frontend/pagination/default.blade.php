@@ -1,7 +1,8 @@
 @if ($paginator->hasPages())
-  <ul class="pagination pagination-rounded pagination-lg mb-60">
-    {{-- Previous Page Link --}}
-    @if ($paginator->onFirstPage())
+<div class="text-xs-right pageinate-page-blog section clearfix">
+  <nav class="clearfix relative nav_pagi f-right w_100">
+    <ul class="pagination clearfix">
+      @if ($paginator->onFirstPage())
       <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
         <a class="page-link">
           <span aria-hidden="true">«</span>
@@ -52,5 +53,8 @@
         </a>
       </li>
     @endif
-  </ul>
+
+    </ul>
+  </nav>
+</div>
 @endif

@@ -45,10 +45,11 @@ class CmsController extends Controller
                     $paramPost['taxonomy_id'] = $taxonomy->id;
                 }
                 // var_dump($paramPost['taxonomy_id']); die;
+                $paramPost['range_price']=$request->range_price??[];
                 $paramPost['status'] = Consts::POST_STATUS['active'];
                 $paramPost['is_type'] = $taxonomy->taxonomy;
                 $this->responseData['posts'] = ContentService::getCmsPost($paramPost)->paginate(Consts::PAGINATE[$taxonomy->taxonomy]);
-                
+                $this->responseData['params'] = $paramPost;
                 return $this->responseView('frontend.pages.' . $taxonomy->taxonomy . '.category');
             } else {
                 return redirect()->back()->with('errorMessage', __('not_found'));

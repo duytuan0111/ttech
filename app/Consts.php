@@ -65,12 +65,12 @@ class Consts
     const DEFAULT_PAGINATE_LIMIT = 20;
 
     const PAGINATE = [
-        'post' => 6,
+        'post' => 8,
         'service' => 8,
-        'product' => 12,
+        'product' => 9,
         'resource' => 6,
         'related' => 6,
-        'sidebar' => 6,
+        'sidebar' => 4,
         'search' => 6,
         'other' => 6,
     ];
@@ -173,7 +173,7 @@ class Consts
             "show_route" => true
         ],
         [
-            "title" => "Đại lý",
+            "title" => "Thanh toán",
             "name" => "frontend.branch",
             "template" => [
                 [

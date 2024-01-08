@@ -141,6 +141,10 @@ class OrderController extends Controller
 
     public function storeOrderProduct(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required'
+        ]);
         DB::beginTransaction();
         try {
             $cart = session()->get('cart', []);
@@ -148,10 +152,7 @@ class OrderController extends Controller
                 return redirect()->back()->with('errorMessage', __('Cart is empty!'));
             }
 
-            $request->validate([
-                'name' => 'required',
-                'phone' => 'required'
-            ]);
+            
             // Check and store order
             $order_params = $request->only([
                 'name',
@@ -161,18 +162,6 @@ class OrderController extends Controller
                 'customer_note'
             ]);
             $order_params['is_type'] = Consts::ORDER_TYPE['product'];
-
-            // Check and add user_id login or affiliate_code
-            if (Auth::guard('web')->check()) {
-                $order_params['customer_id'] = Auth::guard('web')->id();
-            } else if ($request->get('affiliate_code') != '') {
-                $affiliate = User::where('affiliate_code', $request->get('affiliate_code'))->first();
-                if ($affiliate) {
-                    $order_params['customer_id'] = $affiliate->id;
-                } else {
-                    return redirect()->back()->with('errorMessage', __('Affiliate code is not existed!'));
-                }
-            }
 
             $order = Order::create($order_params);
 

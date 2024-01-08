@@ -1,223 +1,182 @@
-<div class="sidebar col-lg-3">
-  <div class="sidebar-widgets-wrap">
-    @php
-      $params_taxonomy['status'] = App\Consts::TAXONOMY_STATUS['active'];
-      $params_taxonomy['taxonomy'] = App\Consts::TAXONOMY['product'];
+<aside class="dqdt-sidebar sidebar left-content col-lg-3 col-md-4 col-sm-4">
+  <div class="wrap_background_aside asidecollection">
+    <div class="filter-content aside-filter">
       
-      $taxonomys = App\Http\Services\ContentService::getCmsTaxonomy($params_taxonomy)->get();
-    @endphp
-    @isset($taxonomys)
-     
-      <div class="widget widget-filter-links">
-        <h4 style="font-weight: bold;">Danh mục sản phẩm</h4>
-        <ul
-          {{-- class="custom-filter ps-2"
-          data-container="#shop"
-          data-active-class="active-filter" --}}
-        >
-          <li class="widget-filter-reset active-filter">
-            <a href="#" class="widget-filter-reset-a" data-filter="*">Clear</a>
-          </li>
-          @foreach ($taxonomys as $item)
-            @if ($item->parent_id == 0 || $item->parent_id == null)
-            <div class="box-li mb-3">
-              @php
-                $title = $item->json_params->title->{$locale} ?? $item->title;
-                $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $title, $item->id);
-                
-                $url_current = url()->full();
-                $current = $alias_category == $url_current ? 'active-filter' : '';
-              @endphp
-              <li class="{{ $current }} ">
-                <a  href="{{ $alias_category }}" title="{{ $title }}" data-filter=".{{ $item->alias }}">
-                  {{ Str::limit($title, 100) }}
-                </a>
-                  <span class="click_li"><i class="fa fa-angle-down"></i></span>
-              </li>
-              <div class="show_list">
-              @foreach ($taxonomys as $sub)
-                @if ($sub->parent_id == $item->id)
-                  <div class="box-li-li mt-2">
+      <div class="filter-container">  
+        <aside class="aside-item blog-sidebar sidebar-category collection-category margin-bottom-25">
+          <h2 class="title-block"><span>Danh mục sản phẩm</span></h2>
+          @php
+            $params_taxonomy['status'] = App\Consts::TAXONOMY_STATUS['active'];
+            $params_taxonomy['taxonomy'] = App\Consts::TAXONOMY['product'];
+            
+            $taxonomys = App\Http\Services\ContentService::getCmsTaxonomy($params_taxonomy)->get();
+          @endphp
+          @isset($taxonomys)
+          <div class="aside-content">
+            <nav class="nav-category navbar-toggleable-md">
+              <ul class="nav navbar-pills">
+               @foreach ($taxonomys as $item)
+                @if ($item->parent_id == 0 || $item->parent_id == null)
                   @php
-                    $title_sub = $sub->json_params->title->{$locale} ?? $sub->title;
-                    $alias_category_sub = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $title_sub, $sub->id);
+                    $title = $item->json_params->title->{$locale} ?? $item->title;
+                    $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['post'], $item->alias ?? $title, $item->id);
+                    
                     $url_current = url()->full();
-                    $current = $alias_category_sub == $url_current ? 'active-filter' : '';
+                    $current = $alias_category == $url_current ? 'active' : '';
                   @endphp
-                  <li class="{{ $current }} mb-2">
-                    <a href="{{ $alias_category_sub }}" title="{{ $title_sub }}" data-filter=".{{ $sub->alias }}">
-                      - {{ Str::limit($title_sub, 100) }}
+                  <li class="nav-item">
+                    <a href="{{ $alias_category }}" class="nav-link ">
+                      {{ $title }}
                     </a>
-                    <span class="click_li_li"><i class="fa fa-angle-down"></i></span>
-                  </li>
-                    <div class="show_list_list">
-                      @foreach ($taxonomys as $sub_child)
-                        @if ($sub_child->parent_id == $sub->id)
+                    @if($item->sub_taxonomy_id!=null)
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="fa-plus svg-inline--fa fa-caret-down fa-w-10"><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z" class=""></path></svg>
+                    @endif
+                    <ul class="dropdown-menu">
+                      @foreach ($taxonomys as $sub)
+                        @if ($sub->parent_id == $item->id)
                           @php
-                            $title_sub_child = $sub_child->json_params->title->{$locale} ?? $sub_child->title;
-                            $alias_category_sub_child = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $title_sub_child, $sub_child->id);
-                            $url_current = url()->full();
-                            $current = $alias_category_sub_child == $url_current ? 'active-filter' : '';
+                            $title_sub = $sub->json_params->title->{$locale} ?? $sub->title;
+
+                            $alias_category_sub = App\Helpers::generateRoute(App\Consts::TAXONOMY['post'], $sub->alias ?? $title_sub, $sub->id);
+                            
+                            $current = $alias_category_sub == $url_current ? 'active' : '';
                           @endphp
-                          <li class="{{ $current }} ml-3 ">
-                            <a class="font-size-12" href="{{ $alias_category_sub_child }}" title="{{ $title_sub_child }}" data-filter=".{{ $sub_child->alias }}">
-                              - - {{ Str::limit($title_sub_child, 100) }}
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{ $alias_category_sub }}">{{ $title_sub }}
                             </a>
-                            {{-- <span></span> --}}
                           </li>
                         @endif
                       @endforeach
-                    </div>
-                  </div>
-                @endif
-              @endforeach
-              </div>
-            </div>  
-            @endif
-          @endforeach
-        </ul>
-      </div>
-
-      <div class="widget widget-filter-links">
-        <h4 style="font-weight: bold;">Sắp xếp theo</h4>
-        <ul class="shop-sorting ps-2">
-          <li class="widget-filter-reset active-filter">
-            <a href="#" class="widget-filter-reset-a" data-sort-by="original-order">Clear</a>
-          </li>
-          <li><a href="#" data-sort-by="name">Tên</a></li>
-          <li class="lowtohight">
-            <a href="#" data-sort-by="price_lh"
-              >Giá: Thấp tới Cao</a
-            >
-          </li>
-          <li>
-            <a href="#" data-sort-by="price_hl"
-              >Giá: Cao tới Thấp</a
-            >
-          </li>
-        </ul>
-      </div>
-    @endisset
-    {{-- NEW PRODUCT --}}
-    @php
-      $params_product['status'] = App\Consts::POST_STATUS['active'];
-      $params_product['is_type'] = App\Consts::POST_TYPE['product'];
-      $params_product['order_by'] = 'id';
-      
-      $recents = App\Http\Services\ContentService::getCmsPost($params_product)
-          ->limit(App\Consts::PAGINATE['sidebar'])
-          ->get();
-    @endphp
-    @isset($recents)
-      <div class="widget clearfix">
-
-        <h4>@lang('Latest products')</h4>
-        <div class="posts-sm row col-mb-30" id="recent-shop-list-sidebar">
-
-          @foreach ($recents as $item)
-            @php
-              $title = $item->json_params->title->{$locale} ?? $item->title;
-              $brief = $item->json_params->brief->{$locale} ?? $item->brief;
-              $image = $item->image_thumb != '' ? $item->image_thumb : ($item->image != '' ? $item->image : null);
-              $date = date('H:i d/m/Y', strtotime($item->created_at));
-              // Viet ham xu ly lay slug
-              $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $item->taxonomy_title, $item->taxonomy_id);
-              $alias = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $item->alias ?? $title, $item->id, 'detail', $item->taxonomy_title);
-            @endphp
-            <div class="entry col-12">
-              <div class="grid-inner row g-0">
-                <div class="col-auto">
-                  <div class="entry-image">
-                    <a href="{{ $alias }}"><img  src="{{ $image }}" alt="{{ Str::limit($title, 500) }}"></a>
-                  </div>
-                </div>
-                <div class="col ps-3">
-                  <div class="entry-title">
-                    <h4><a href="{{ $alias }}">{{ Str::limit($title, 50) }}</a></h4>
-                  </div>
-                  <div class="entry-meta no-separator">
-                    <ul>
-                      <li class="color">
-                        {{ isset($item->json_params->price) && $item->json_params->price > 0 ? number_format($item->json_params->price, 0, ',', '.') . ' đ' : __('Contact') }}
-
-                      </li>
-                      <li class="product-rating d-none">
-                        <i class="icon-star3"></i>
-                        <i class="icon-star3"></i>
-                        <i class="icon-star3"></i>
-                        <i class="icon-star3"></i>
-                        <i class="icon-star3"></i>
-                      </li>
                     </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          @endforeach
-        </div>
+                  </li>
+                  @endif
+                @endforeach
+              </ul>
+            </nav>
+          </div>
+          @endisset
+        </aside>
+        
+        
+        <!-- End Lọc Thương hiệu -->
+        <!-- Lọc giá -->
+        <form action=""method='get' >
+          @csrf
+        <aside class="aside-item filter-price f-left">
+          <div class="aside-title">
+            <h2 class="title-filter title-head margin-top-0"><span>Khoảng giá</span></h2>
+          </div>
+          <div class="aside-content margin-top-0 filter-group content_price">
+            <ul>
+              
+              <li class="filter-item filter-item--check-box filter-item--green">
+                <span>
+                  <label data-filter="1-000-000d" for="filter-duoi-1-000-000d">
+                    <input @isset($params['range_price'])@if(in_array(1, $params['range_price'])) checked @endif @endisset name="range_price[]" type="checkbox" id="filter-duoi-1-000-000d"  data-group="Khoảng giá" data-field="price_min" data-text="Dưới 1.000.000đ" value="1" data-operator="OR">
+                    <i class="fa"></i>
+                    Dưới 1 triệu
+                  </label>
+                </span>
+              </li>
+              
+              <li class="filter-item filter-item--check-box filter-item--green">
+                <span>
+                  <label data-filter="2-000-000d" for="filter-1-000-000d-2-000-000d">
+                    <input @isset($params['range_price'])@if(in_array(2, $params['range_price'])) checked @endif @endisset  name="range_price[]" type="checkbox" id="filter-1-000-000d-2-000-000d"  data-group="Khoảng giá" data-field="price_min" data-text="1.000.000đ - 2.000.000đ" value="2" data-operator="OR">
+                    <i class="fa"></i> 
+                    Từ 1 đến 2 triệu              
+                  </label>
+                </span>
+              </li> 
+              
+              <li class="filter-item filter-item--check-box filter-item--green">
+                <span>
+                  <label data-filter="4-000-000d" for="filter-2-000-000d-4-000-000d">
+                    <input @isset($params['range_price'])@if(in_array(3, $params['range_price'])) checked @endif @endisset  name="range_price[]" type="checkbox" id="filter-2-000-000d-4-000-000d"  data-group="Khoảng giá" data-field="price_min" data-text="2.000.000đ - 4.000.000đ" value="3" data-operator="OR">
+                    <i class="fa"></i> 
+                    Từ 2 đến 4 triệu              
+                  </label>
+                </span>
+              </li> 
+              
+              <li class="filter-item filter-item--check-box filter-item--green">
+                <span>
+                  <label data-filter="6-000-000d" for="filter-4-000-000d-6-000-000d">
+                    <input @isset($params['range_price'])@if(in_array(4, $params['range_price'])) checked @endif @endisset  name="range_price[]" type="checkbox" id="filter-4-000-000d-6-000-000d"  data-group="Khoảng giá" data-field="price_min" data-text="4.000.000đ - 6.000.000đ" value="4" data-operator="OR">
+                    <i class="fa"></i> 
+                    Từ 4 đến 6 triệu              
+                  </label>
+                </span>
+              </li> 
+              
+              <li class="filter-item filter-item--check-box filter-item--green">
+                <span>
+                  <label data-filter="8-000-000d" for="filter-6-000-000d-8-000-000d">
+                    <input @isset($params['range_price'])@if(in_array(5, $params['range_price'])) checked @endif @endisset  name="range_price[]" type="checkbox" id="filter-6-000-000d-8-000-000d"  data-group="Khoảng giá" data-field="price_min" data-text="6.000.000đ - 8.000.000đ" value="5" data-operator="OR">
+                    <i class="fa"></i> 
+                    Từ 6 đến 8 triệu              
+                  </label>
+                </span>
+              </li> 
+              
+              <li class="filter-item filter-item--check-box filter-item--green">
+                <span>
+                  <label data-filter="10-000-000d" for="filter-8-000-000d-10-000-000d">
+                    <input  @isset($params['range_price'])@if(in_array(6, $params['range_price'])) checked @endif @endisset name="range_price[]" type="checkbox" id="filter-8-000-000d-10-000-000d"  data-group="Khoảng giá" data-field="price_min" data-text="8.000.000đ - 10.000.000đ" value="6" data-operator="OR">
+                    <i class="fa"></i> 
+                    Từ 8 đến 10 triệu             
+                  </label>
+                </span>
+              </li> 
+                                    
+              <li class="filter-item filter-item--check-box filter-item--green">
+                <span>
+                  <label data-filter="20-000-000d" for="filter-10-000-000d-20-000-000d">
+                    <input  @isset($params['range_price'])@if(in_array(7, $params['range_price'])) checked @endif @endisset name="range_price[]" type="checkbox" id="filter-10-000-000d-20-000-000d"  data-group="Khoảng giá" data-field="price_min" data-text="10.000.000đ - 20.000.000đ" value="7" data-operator="OR">
+                    <i class="fa"></i> 
+                    Từ 10 đến 20 triệu              
+                  </label>
+                </span>
+              </li> 
+              
+              
+              
+              <li class="filter-item filter-item--check-box filter-item--green">
+                <span>
+                  <label data-filter="40-000-000d" for="filter-20-000-000d-40-000-000d">
+                    <input @isset($params['range_price'])@if(in_array(8, $params['range_price'])) checked @endif @endisset  name="range_price[]" type="checkbox" id="filter-20-000-000d-40-000-000d"  data-group="Khoảng giá" data-field="price_min" data-text="20.000.000đ - 40.000.000đ" value="8" data-operator="OR">
+                    <i class="fa"></i> 
+                    Từ 20 đến 40 triệu              
+                  </label>
+                </span>
+              </li> 
+                                    
+              <li class="filter-item filter-item--check-box filter-item--green">
+                <span>
+                  <label data-filter="50-000-000d" for="filter-40-000-000d-50-000-000d">
+                    <input @isset($params['range_price'])@if(in_array(9, $params['range_price'])) checked @endif @endisset  name="range_price[]" type="checkbox" id="filter-40-000-000d-50-000-000d" data-group="Khoảng giá" data-field="price_min" data-text="40.000.000đ - 50.000.000đ" value="9" data-operator="OR">
+                    <i class="fa"></i>
+                    Từ 40 đến 50 triệu              
+                  </label>
+                </span>
+              </li> 
+              <li class="filter-item filter-item--check-box filter-item--green">
+                <span>
+                  <label data-filter="50-000-000d" for="filter-tren50-000-000d">
+                    <input  @isset($params['range_price'])@if(in_array(10, $params['range_price'])) checked @endif @endisset name="range_price[]"  type="checkbox" id="filter-tren50-000-000d" data-group="Khoảng giá" data-field="price_min" data-text="Trên 50.000.000đ" value="10" data-operator="OR">
+                    <i class="fa"></i>
+                    Trên 50 triệu
+                  </label>
+                </span>
+              </li>
+                           
+            </ul>
+          </div>
+        </aside>
+        <button class="btn btn-warning btn-sm text-dark">Tìm kiếm</button>
+        <!-- End Lọc giá -->
+        </form>
       </div>
-    @endisset
-
-    {{-- MOST VIEW PRODUCT --}}
-    @php
-      $params_product['status'] = App\Consts::POST_STATUS['active'];
-      $params_product['is_type'] = App\Consts::POST_TYPE['product'];
-      $params_product['order_by'] = 'count_visited';
-      
-      $mostViews = App\Http\Services\ContentService::getCmsPost($params_product)
-          ->limit(App\Consts::PAGINATE['sidebar'])
-          ->get();
-    @endphp
-    @isset($mostViews)
-      <div class="widget clearfix">
-
-        <h4>@lang('Most viewed products')</h4>
-        <div class="posts-sm row col-mb-30" id="recent-shop-list-sidebar">
-
-          @foreach ($mostViews as $item)
-            @php
-              $title = $item->json_params->title->{$locale} ?? $item->title;
-              $brief = $item->json_params->brief->{$locale} ?? $item->brief;
-              $image = $item->image_thumb != '' ? $item->image_thumb : ($item->image != '' ? $item->image : null);
-              $date = date('H:i d/m/Y', strtotime($item->created_at));
-              // Viet ham xu ly lay slug
-              $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $item->taxonomy_title, $item->taxonomy_id);
-              $alias = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $item->alias ?? $title, $item->id, 'detail', $item->taxonomy_title);
-            @endphp
-            <div class="entry col-12">
-              <div class="grid-inner row g-0">
-                <div class="col-auto">
-                  <div class="entry-image">
-                    <a href="{{ $alias }}"><img src="{{ $image }}"
-                        alt="{{ Str::limit($title, 500) }}"></a>
-                  </div>
-                </div>
-                <div class="col ps-3">
-                  <div class="entry-title">
-                    <h4><a href="{{ $alias }}">{{ Str::limit($title, 50) }}</a></h4>
-                  </div>
-                  <div class="entry-meta no-separator">
-                    <ul>
-                      <li class="color">
-                        {{ isset($item->json_params->price) && $item->json_params->price > 0 ? number_format($item->json_params->price, 0, ',', '.') . ' đ' : __('Contact') }}
-
-                      </li>
-                      <li class="product-rating d-none">
-                        <i class="icon-star3"></i>
-                        <i class="icon-star3"></i>
-                        <i class="icon-star3"></i>
-                        <i class="icon-star3"></i>
-                        <i class="icon-star3"></i>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          @endforeach
-        </div>
-      </div>
-    @endisset
-
+    </div>
   </div>
-</div>
+</aside>

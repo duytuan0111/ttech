@@ -4,147 +4,192 @@
 $page_title = $taxonomy->title ?? ($page->title ?? ($page->name ?? ''));
 $image_background = $taxonomy->json_params->image_background ?? ($web_information->image->background_breadcrumbs ?? '');
 @endphp
-
+@push('style')
+<link rel="preload" as="style" href="{{ asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/ajaxcart.scss2c6f.css?1697597694844') }}"  type="text/css">
+<link href="{{ asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/ajaxcart.scss2c6f.css?1697597694844') }}" rel="stylesheet" type="text/css" media="all" />
+@endpush
 @section('content')
-  <section style="background-image: url('{{ $image_background }}'); background-size: cover;" id="page-title">
-    <div class="container clearfix text-center">
-      <h1>{{ $page_title }}</h1>
-    </div>
-  </section>
-
-  <section id="content">
-    <div class="content-wrap">
-      <div class="container">
-        @if (session('cart'))
-          <table class="table cart mb-5">
-            <thead>
-              <tr>
-                <th class="cart-product-remove">&nbsp;</th>
-                <th class="cart-product-thumbnail">&nbsp;</th>
-                <th class="cart-product-name">@lang('Product')</th>
-                <th class="cart-product-price">@lang('Price') </th>
-                <th class="cart-product-quantity">@lang('Quantity')</th>
-                <th class="cart-product-subtotal">@lang('Total')</th>
-              </tr>
-            </thead>
-            <tbody>
-              @php $total = 0 @endphp
-              @foreach (session('cart') as $id => $details)
-                @php
-                  $title = $details['title'];
-                  $total += $details['price'] * $details['quantity'];
-                  $alias_detail = Str::slug($details['title']);
-                  $url_link = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'],$title, $details['id'], 'detail', 'san-pham');
-                @endphp
-                <tr class="cart_item" data-id="{{ $id }}">
-                  <td class="cart-product-remove">
-                    <a href="javascript:void(0)" class="remove remove-from-cart" title="@lang('Remove this item')">
-                      <i class="icon-trash2"></i>
-                    </a>
-                  </td>
-                  <td class="cart-product-thumbnail">
-                    <a href="{{ $url_link }}">
-                      <img width="64" height="64" src="{{ $details['image_thumb'] ?? $details['image'] }}"
-                        alt="{{ $details['title'] }}">
-                    </a>
-                  </td>
-                  <td class="cart-product-name">
-                    <a href="{{ $url_link }}">{{ $details['title'] }}</a>
-                  </td>
-                  <td class="cart-product-price">
-                    <span class="amount">
-                      {{ isset($details['price']) && $details['price'] > 0 ? number_format($details['price']) : __('Contact') }}
-                    </span>
-                  </td>
-                  <td class="cart-product-quantity">
-                    <div class="quantity">
-                      <input type="button" value="-" class="minus">
-                      <input type="text" name="quantity" value="{{ $details['quantity'] }}" autocomplete="off"
-                        class="qty update-cart" />
-                      <input type="button" value="+" class="plus">
-                    </div>
-                  </td>
-                  <td class="cart-product-subtotal">
-                    <span class="amount">{{ number_format($details['price'] * $details['quantity']) }}</span>
-                  </td>
-                </tr>
-              @endforeach
-              <tr class="cart_item">
-                <td colspan="5">
-                  <div class="row justify-content-between">
-                    <div class="col-lg-12">
-                      <a href="{{ url()->current() }}" class="button button-3d m-0">@lang('Update Cart')</a>
-                    </div>
-                  </div>
-                </td>
-                <td class="cart-product-subtotal">
-                  <span class="amount text-danger">
-                    <strong>
-                      {{ number_format($total) }}
-                    </strong>
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="row col-mb-30">
-            <div class="col-lg-12">
-              <h4 class="text-uppercase">@lang('Submit Order Cart')</h4>
-              <form class="row" method="POST" action="{{ route('frontend.order.store.product') }}">
-                @csrf
-                <div class="col-md-4 form-group">
-                  <label for="name">@lang('Fullname') <small class="text-danger">*</small></label>
-                  <input type="text" class="sm-form-control" placeholder="@lang('Fullname') *" id="name"name="name" required value="{{ $user_auth->name ?? old('name') }}" />
-                </div>
-                <div class="col-md-4 form-group">
-                  <label for="email">@lang('Email')</label>
-                  <input type="email" class="sm-form-control" placeholder="@lang('Email')" id="email"
-                    name="email" value="{{ old('email') }}" />
-                </div>
-                <div class="col-md-4 form-group">
-                  <label for="phone">@lang('Phone') <small class="text-danger">*</small></label>
-                  <input type="text" class="sm-form-control" placeholder="@lang('Phone') *" id="phone"
-                    name="phone" required value="{{ $user_auth->phone ?? old('phone') }}" />
-                </div>
-                <div class="col-md-4 form-group">
-                  <label for="affiliate_code">@lang('Affiliate code')</label>
-                  <input type="text" id="affiliate_code" name="affiliate_code"
-                    value="{{ $user_auth->affiliate_code ?? old('affiliate_code') }}" class="sm-form-control"
-                    placeholder="@lang('Affiliate code')" />
-                </div>
-                <div class="col-md-8 form-group">
-                  <label for="address">@lang('Address')</label>
-                  <input type="text" class="sm-form-control" placeholder="@lang('Address')" id="address"
-                    name="address" value="{{ old('address') }}" />
-                </div>
-
-                <div class="col-md-12 form-group">
-                  <label for="customer_note">@lang('Content note')</label>
-                  <textarea class="sm-form-control" id="customer_note" name="customer_note" rows="5" cols="30"
-                    placeholder="@lang('Content note')" autocomplete="off">{{ old('customer_note') }}</textarea>
-                </div>
-                <div class="col-12 form-group">
-                  <button type="submit" class="button button-3d m-0">@lang('Submit Order')</button>
-                </div>
-              </form>
+  <div class="main-index">
+      <section class="bread-crumb">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 a-left">
+              <ul class="breadcrumb" >          
+                <li class="home">
+                  <a  href="/" ><span >Trang chủ</span></a>            
+                  <span class="mr_lr">&nbsp;/&nbsp;</span>
+                </li>
+                <li><strong ><span>Giỏ hàng</span></strong></li>
+              </ul>
             </div>
           </div>
-        @else
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="style-msg alertmsg">
-                <div class="sb-msg">
-                  <i class="icon-warning-sign"></i>
-                  <strong>@lang('Warning!')</strong>
-                  @lang('Cart is empty!')
+        </div>
+      </section> 
+      <section class="main-cart-page main-container col1-layout">
+        <div class="main container cartpcstyle">
+          <div class="wrap_background_aside margin-bottom-40">
+            <div class="header-cart">
+              <div class="title-block-page">
+                <h1 class="title_cart">
+                  <span>Giỏ hàng của bạn</span>
+                </h1>
+              </div>
+            </div>
+            @if (session('cart'))
+            <div class="cart-page d-xl-block d-none">
+              <div class="drawer__inner">
+                <div class="CartPageContainer">
+                    <div class="cart-header-info">
+                      <div>Thông tin sản phẩm</div><div>Đơn giá</div><div>Số lượng</div><div>Thành tiền</div>
+                    </div>
+                    <div class="ajaxcart__inner ajaxcart__inner--has-fixed-footer cart_body items">
+                      @php $total = 0 @endphp
+                      @foreach (session('cart') as $id => $details)
+                      @php
+                        $title = $details['title'];
+                        $total += $details['price'] * $details['quantity'];
+                        $alias_detail = Str::slug($details['title']);
+                        $url_link = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'],$title, $details['id'], 'detail', 'san-pham');
+                      @endphp
+                      <div class="ajaxcart__row">
+                        
+                        <div class="ajaxcart__product cart_product" data-line="1">
+                          <a href="{{ $url_link }}" class="ajaxcart__product-image cart_image" title="{{ $title }}"><img src="{{ $details['image_thumb'] ?? $details['image'] }}" alt="{{ $title }}"></a>
+                          <div class="grid__item cart_info">
+                            <div class="ajaxcart__product-name-wrapper cart_name">
+                              <a href="{{ $url_link }}" class="ajaxcart__product-name h4" title="{{ $title }}">{{ $title }}</a>
+                              <a data-id="{{ $id }}" class="remove remove-from-cart cart__btn-remove remove-item-cart ajaxifyCart--remove" href="javascript:void(0)" >Xóa</a>
+                              
+                            </div>
+                            <div class="grid">
+                              <div class="grid__item one-half text-right cart_prices">
+                                <span class="cart-price">{!! isset($details['price']) && $details['price'] > 0 ? number_format($details['price'], 0, ',', '.') . ' ₫' : __('Contact') !!}</span>
+                              </div>
+                            </div>
+                            <div class="grid">
+                              <div class="grid__item one-half cart_select">
+                                <div class="ajaxcart__qty input-group-btn">
+                                  <button type="button" class="ajaxcart__qty-adjust ajaxcart__qty--minus items-count" data-id="" data-qty="0" data-line="1" aria-label="-">
+                                    -
+                                  </button>
+                                  <input data-id="{{ $id }}" type="text" name="quantity" class="update-cart qty ajaxcart__qty-num number-sidebar" maxlength="3" value="{{ $details['quantity'] }}" min="0" data-id="" data-line="1" aria-label="quantity" pattern="[0-9]*">
+                                  <button type="button" class="ajaxcart__qty-adjust ajaxcart__qty--plus items-count" data-id="" data-line="1" data-qty="2" aria-label="+">
+                                    +             
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="grid">
+                              <div class="grid__item one-half text-right cart_prices">
+                                <span class="cart-price">{{ number_format($details['price'] * $details['quantity'], 0, ',', '.') . ' ₫' }}</span>
+                                
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      
+                      </div>
+                      @endforeach
+                    </div>
+                    <div class="ajaxcart__footer ajaxcart__footer--fixed cart-footer">
+                      <div class="row">
+                        <div class="col-lg-4 col-12 offset-md-8 offset-lg-8 offset-xl-8">
+                          <div class="ajaxcart__subtotal">
+                            <div class="cart__subtotal">
+                              <div class="cart__col-6">Tổng tiền:</div>
+                              <div class="text-right cart__totle"><span class="total-price">{{ number_format($total, 0, ',', '.') . ' ₫' }}</span></div>
+                            </div>
+                          </div>
+                          <div class="cart__btn-proceed-checkout-dt">
+                            <button onclick="location.href='/thanh-toan'" type="button" class="button btn btn-default cart__btn-proceed-checkout" id="btn-proceed-checkout" title="Thanh toán">Thanh toán</button>
+                          </div>
+                          <br>
+                        </div>
+                      </div>
+                    </div>
                 </div>
               </div>
             </div>
+            <div class="cart-mobile-page d-block d-xl-none">
+              <div class="CartMobileContainer">
+                <form action="/cart" method="post" novalidate="" class="cart ajaxcart cart-mobile">
+                  <div class="ajaxcart__inner ajaxcart__inner--has-fixed-footer cart_body">
+                    @php $total = 0 @endphp
+                      @foreach (session('cart') as $id => $details)
+                      @php
+                        $title = $details['title'];
+                        $total += $details['price'] * $details['quantity'];
+                        $alias_detail = Str::slug($details['title']);
+                        $url_link = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'],$title, $details['id'], 'detail', 'san-pham');
+                      @endphp
+                      <div class="ajaxcart__row">
+                        <div class="ajaxcart__product cart_product" data-line="1">
+                          <a href="{{ $url_link }}" class="ajaxcart__product-image cart_image" title="{{ $title }}"><img width="80" height="80" src="{{ $details['image_thumb'] ?? $details['image'] }}" alt="{{ $title }}"></a>
+                          <div class="grid__item cart_info">
+                            <div class="ajaxcart__product-name-wrapper cart_name">
+                              <a href="{{ $url_link }}" class="ajaxcart__product-name h4" title="{{ $title }}">{{ $title }}</a>
+                            </div>
+                            <div class="grid">
+                              <div class="grid__item one-half cart_select cart_item_name">
+                                <div class="ajaxcart__qty input-group-btn">
+                                  <button type="button" class="ajaxcart__qty-adjust ajaxcart__qty--minus items-count" data-id="" data-qty="0" data-line="1" aria-label="-">
+                                  -
+                                  </button>
+                                  <input data-id="{{ $id }}" type="text" name="quantity" class="update-cart qty ajaxcart__qty-num number-sidebar" maxlength="3" value="{{ $details['quantity'] }}" min="0" data-id="" data-line="1" aria-label="quantity" pattern="[0-9]*">
+                                  <button type="button" class="ajaxcart__qty-adjust ajaxcart__qty--plus items-count" data-id="" data-line="1" data-qty="2" aria-label="+">
+                                  +             
+                                  </button>
+                                </div>
+                              </div>
+                              <div class="grid__item one-half text-right cart_prices">
+                                <span class="cart-price">{!! isset($details['price']) && $details['price'] > 0 ? number_format($details['price'], 0, ',', '.') . ' ₫' : __('Contact') !!}</span>
+                                <a data-id="{{ $id }}" class="remove-from-cart cart__btn-remove remove-item-cart ajaxifyCart--remove" href="javascript:;" data-line="1">Xóa</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      @endforeach
+                  </div>
+                  <div class="ajaxcart__footer ajaxcart__footer--fixed cart-footer">
+                    <div class="ajaxcart__subtotal">
+                      <div class="cart__subtotal">
+                        <div class="cart__col-6">Tổng tiền:</div>
+                        <div class="text-right cart__totle"><span class="total-price">{{ number_format($total, 0, ',', '.') . ' ₫' }}</span></div>
+                      </div>
+                    </div>
+                    <div class="cart__btn-proceed-checkout-dt">
+                      <button onclick="location.href='/checkout'" type="button" class="button btn btn-default cart__btn-proceed-checkout" id="btn-proceed-checkout" title="Thanh toán">Thanh toán</button>
+                    </div>
+                  </div>
+                </form>  
+              </div>
+            </div>
+            @else
+            <div class="container">
+            <div style="min-width: 100%;" class="alert alert-warning col-12"  role="alert">
+              @lang('Cart is empty!')
+            </div>
+            </div>
+            @endif
           </div>
-        @endif
-      </div>
+        </div>
+      </section>
     </div>
-  </section>
-
-  {{-- End content --}}
 @endsection
+@push('js_filter')
+<script type="text/javascript">
+  $('.ajaxcart__qty--plus').click(function(){
+    var quantity = $(this).parents('.cart_product').find('.update-cart').val();
+    $(this).parents('.cart_product').find('.update-cart').val(++quantity)
+    $(this).parents('.cart_product').find('.update-cart').trigger('change');
+  })
+  $('.ajaxcart__qty--minus').click(function(){
+    var quantity = $(this).parents('.cart_product').find('.update-cart').val();
+    if(quantity>0)
+    $(this).parents('.cart_product').find('.update-cart').val(--quantity);
+  $(this).parents('.cart_product').find('.update-cart').trigger('change');
+
+  })
+</script>
+@endpush

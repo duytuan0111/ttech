@@ -14,7 +14,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="iconcate-action" x="0px" y="0px" viewBox="0 0 384.97 384.97" style="enable-background:new 0 0 384.97 384.97;" xml:space="preserve"> <g> <g id="Menu_1_"> <path d="M12.03,120.303h360.909c6.641,0,12.03-5.39,12.03-12.03c0-6.641-5.39-12.03-12.03-12.03H12.03    c-6.641,0-12.03,5.39-12.03,12.03C0,114.913,5.39,120.303,12.03,120.303z"/> <path d="M372.939,180.455H12.03c-6.641,0-12.03,5.39-12.03,12.03s5.39,12.03,12.03,12.03h360.909c6.641,0,12.03-5.39,12.03-12.03    S379.58,180.455,372.939,180.455z"/> <path d="M372.939,264.667H132.333c-6.641,0-12.03,5.39-12.03,12.03c0,6.641,5.39,12.03,12.03,12.03h240.606    c6.641,0,12.03-5.39,12.03-12.03C384.97,270.056,379.58,264.667,372.939,264.667z"/> </g> </g> </svg>
             </div>
           </div>
-          <div class="col-lg-8 col-xl-7 col-md-5 col-10 col-search order-3 order-md-2">
+          <div class="col-lg-9 col-xl-8 col-md-6 col-10 col-search order-3 order-md-2">
             <!-- search -->
             <div class="theme-search-smart">
               <div class="header_search theme-searchs">
@@ -48,7 +48,7 @@
               
               <li class="cart-drop">
                 <div class="icon">
-                  <a class="img_hover_cart" href="cart.html" title="Giỏ hàng">
+                  <a class="img_hover_cart" href="<?php echo e(route('frontend.order.cart')); ?>" title="Giỏ hàng">
                     <svg enable-background="new 0 0 407.453 407.453" version="1.1" viewBox="0 0 407.45 407.45" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"> <g fill="#010002"> <path d="m255.1 116.52c4.487 0 8.129-3.633 8.129-8.129 0-4.495-3.642-8.129-8.129-8.129h-111.61c-4.487 0-8.129 3.633-8.129 8.129 0 4.495 3.642 8.129 8.129 8.129h111.61z"></path> <path d="m367.06 100.26h-55.372c-4.487 0-8.129 3.633-8.129 8.129 0 4.495 3.642 8.129 8.129 8.129h47.243v274.68h-310.41v-274.68h44.536c4.487 0 8.129-3.633 8.129-8.129 0-4.495-3.642-8.129-8.129-8.129h-52.664c-4.487 0-8.129 3.633-8.129 8.129v290.94c0 4.495 3.642 8.129 8.129 8.129h326.67c4.487 0 8.129-3.633 8.129-8.129v-290.94c0-4.495-3.634-8.128-8.129-8.128z"></path> <path d="m282.59 134.8c4.487 0 8.129-3.633 8.129-8.129v-59.273c-1e-3 -37.156-40.115-67.394-89.618-67.394-49.308 0-89.414 30.238-89.414 67.394v59.274c0 4.495 3.642 8.129 8.129 8.129s8.129-3.633 8.129-8.129v-59.274c0-28.198 32.823-51.137 73.36-51.137 40.334 0 73.157 22.939 73.157 51.137v59.274c-1e-3 4.495 3.633 8.128 8.128 8.128z"></path> <path d="m98.892 147.57c0 11.526 9.389 20.907 20.923 20.907s20.923-9.38 20.923-20.907c0-4.495-3.642-8.129-8.129-8.129s-8.129 3.633-8.129 8.129c0 2.561-2.089 4.65-4.666 4.65-2.569 0-4.666-2.089-4.666-4.65 0-4.495-3.642-8.129-8.129-8.129s-8.127 3.634-8.127 8.129z"></path> <path d="m282.59 168.47c11.534 0 20.923-9.38 20.923-20.907 0-4.495-3.642-8.129-8.129-8.129s-8.129 3.633-8.129 8.129c0 2.561-2.089 4.65-4.666 4.65s-4.666-2.089-4.666-4.65c0-4.495-3.642-8.129-8.129-8.129s-8.129 3.633-8.129 8.129c2e-3 11.526 9.39 20.907 20.925 20.907z"></path> </g> </svg>
                     <span class="count_item count_item_pr"><?php echo e(count((array) session('cart') ?? 0)); ?></span>
                   </a>
@@ -97,83 +97,46 @@
                             <i class="fa fa-angle-right"></i>
                             <?php endif; ?>
                           </a>
-                          <i class="fa fa-angle-down"></i>
+                          <?php if(count($taxonomys_childs)!=0): ?>
+                            <i class="fa fa-angle-down"></i>
+                          <?php endif; ?>
+                          <?php if(count($taxonomys_childs)!=0): ?>
                           <ul class="ul_content_right_1 row">
-                            
+                            <?php $__currentLoopData = $taxonomys_childs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item_child): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                              $title_child = $item_child->json_params->title->{$locale} ?? $item_child->title;
+                              $image_child= $item_child->json_params->image != '' ? $item_child->json_params->image : null;
+                              $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $title_child, $item_child->id);
+                            ?>
                             <li class="nav_item has-subnav lv2 col-lg-3 col-md-12">
                               <h4 class="text-normal">
-                                
-                                <a href="javascript:;" title="Giảm giá cực hot" data-src="//bizweb.dktcdn.net/100/429/689/themes/869367/assets/firex.png?1697597694844" class="lazyload hot">Giảm giá cực hot</a>
+                                <a style="background-image: url('<?php echo e($image_child); ?>');" href="<?php echo e($alias_category); ?>" title="<?php echo e($title_child); ?>" class=" hot"><?php echo e($title_child); ?></a>
                               </h4>
                               <ul class="ul_content_right_2">
-                                
-                                
-                                <li class="nav_item lv3">
-                                  <a href="iphone-12-va-hang-loat-flagship-dang-giam-gia-cuc-manh.html" title="iPhone 12 và hàng loạt flagship đang giảm giá cực mạnh">iPhone 12 và hàng loạt flagship đang giảm giá cực mạnh</a>
-                                </li>
-                                
+                                <?php
+                                  $params['status'] = App\Consts::POST_STATUS['active'];
+                                  $params['is_type'] = App\Consts::POST_TYPE['product'];
+                                  $params['taxonomy_id'] = $item_child->id;
+                                  $rows = App\Http\Services\ContentService::getCmsPost($params)
+                                      ->limit(4)
+                                      ->get();
+                                ?>
+                                <?php if($rows): ?>
+                                  <?php $__currentLoopData = $rows; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item_sub): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                  <?php
+                                    $title = $item_sub->json_params->title->{$locale} ?? $item_sub->title;
+                                    $alias = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $title, $item_sub->id, 'detail', $item_sub->taxonomy_title);
+                                  ?>
+                                  <li class="nav_item lv3">
+                                    <a href="<?php echo e($alias); ?>" title="<?php echo e($title); ?>">- <?php echo e($title); ?></a>
+                                  </li>
+                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
                               </ul>
                             </li>
-                            
-                            
-                            
-                            <li class="nav_item lv2 col-lg-3 col-md-12">
-                              <h4>
-                                <a href="apple.html" title="Apple">Apple</a>
-                              </h4>
-                              <ul class="ul_content_right_2">
-                                
-                                <li class="nav_item lv3"><a href="iphone-x.html" title="iPhone X">iPhone X</a></li>
-                                
-                                <li class="nav_item lv3"><a href="iphone-11.html" title="iPhone 11">iPhone 11</a></li>
-                                
-                                <li class="nav_item lv3"><a href="iphone-12-mini.html" title="iPhone 12 mini">iPhone 12 mini</a></li>
-                                
-                                <li class="nav_item lv3"><a href="iphone-12-pro-max.html" title="iPhone 12 Pro Max">iPhone 12 Pro Max</a></li>
-                                
-                              </ul>
-                            </li>
-                            
-                            
-                            
-                            <li class="nav_item lv2 col-lg-3 col-md-12">
-                              <h4>
-                                <a href="samsung.html" title="Samsung">Samsung</a>
-                              </h4>
-                              <ul class="ul_content_right_2">
-                                
-                                <li class="nav_item lv3"><a href="collections/all.html" title="Samsung Galaxy A">Samsung Galaxy A</a></li>
-                                
-                                <li class="nav_item lv3"><a href="collections/all.html" title="Samsung Galaxy Note">Samsung Galaxy Note</a></li>
-                                
-                                <li class="nav_item lv3"><a href="index.html" title="Samsung Galaxy Ultra">Samsung Galaxy Ultra</a></li>
-                                
-                                <li class="nav_item lv3"><a href="collections/all.html" title="Samsung Galaxy S">Samsung Galaxy S</a></li>
-                                
-                              </ul>
-                            </li>
-                            
-                            
-                            
-                            <li class="nav_item lv2 col-lg-3 col-md-12">
-                              <h4>
-                                <a href="xiaomi.html" title="Xiaomi">Xiaomi</a>
-                              </h4>
-                              <ul class="ul_content_right_2">
-                                
-                                <li class="nav_item lv3"><a href="collections/all.html" title="Xiaomi Mi 10">Xiaomi Mi 10</a></li>
-                                
-                                <li class="nav_item lv3"><a href="collections/all.html" title="Xiaomi Mi Max">Xiaomi Mi Max</a></li>
-                                
-                                <li class="nav_item lv3"><a href="collections/all.html" title="Xiaomi Poco Phone">Xiaomi Poco Phone</a></li>
-                                
-                                <li class="nav_item lv3"><a href="collections/all.html" title="Xiaomi Mi Note">Xiaomi Mi Note</a></li>
-                                
-                              </ul>
-                            </li>
-                            
-                            
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                           </ul>
+                          <?php endif; ?>
                         </li>
                       <?php endif; ?>  
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>    
