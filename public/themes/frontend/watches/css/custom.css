@@ -1,0 +1,19 @@
+.header {
+    background: #0f5b99;
+}
+
+.header_nav_main {
+    background: #005091;
+}
+
+.header_search {
+    border: unset;
+}
+
+.header .contact-phone a {
+    color:  #fff;
+}
+
+.header .contact-phone p {
+    color: #fff;
+}
