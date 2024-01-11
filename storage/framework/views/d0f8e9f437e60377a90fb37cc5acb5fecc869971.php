@@ -1,25 +1,12 @@
 <?php
   $page_title = $taxonomy->title ?? ($page->title ?? $page->name);
-  $image_background = $taxonomy->json_params->image_background ?? ($web_information->image->background_breadcrumbs ?? '');
+  $seo_title = $page_title . (isset($params['keyword']) && $params['keyword'] != '' ? ': ' . $params['keyword'] : '');
   
-  $title = $taxonomy->json_params->title->{$locale} ?? ($taxonomy->title ?? null);
-  $page_brief = $taxonomy->json_params->brief->{$locale} ?? ($taxonomy->brief ?? null);
-  $image = $taxonomy->json_params->image ?? null;
-  $seo_title = $taxonomy->json_params->seo_title ?? $title;
-  $seo_keyword = $taxonomy->json_params->seo_keyword ?? null;
-  $seo_description = $taxonomy->json_params->seo_description ?? null;
-  $seo_image = $image ?? null;
+  $image_background = $taxonomy->json_params->image_background ?? ($web_information->image->background_breadcrumbs ?? '');
 ?>
 <?php $__env->startPush('style'); ?>
-  <link href="<?php echo e(asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/favicon2c6f.png?1697597694844')); ?>" rel="icon" type="image/x-icon"  />
-  <link rel="apple-touch-icon" href="<?php echo e(asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/favicon2c6f.png?1697597694844')); ?>">
-
-  <link rel="preload" as='style' type="text/css" href="<?php echo e(asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/sidebar_style.scss2c6f.css?1697597694844')); ?>">
-  <link href="<?php echo e(asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/sidebar_style.scss2c6f.css?1697597694844')); ?>" rel="stylesheet" type="text/css" media="all" /> 
-
-  <link rel="preload" as='style' type="text/css" href="<?php echo e(asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/collection_style.scss2c6f.css?1697597694844')); ?>">
-  <link href="<?php echo e(asset('themes/frontend/watches/bizweb.dktcdn.net/100/429/689/themes/869367/assets/collection_style.scss2c6f.css?1697597694844')); ?>" rel="stylesheet" type="text/css" media="all" />
   <style>
+
   </style>
 <?php $__env->stopPush(); ?>
 <?php $__env->startSection('content'); ?>
@@ -34,7 +21,7 @@
                     <a  href="/" ><span >Trang chủ</span></a>            
                     <span class="mr_lr">&nbsp;/&nbsp;</span>
                   </li>
-                  <li><strong ><span> <?php echo e($title); ?></span></strong></li>
+                  <li><strong ><span> <?php echo e($page_title); ?></span></strong></li>
                 </ul>
               </div>
             </div>
@@ -43,14 +30,11 @@
         <div class="container ">
           <div class="bg_collection section">
             <div class="row">
-              <?php echo $__env->make('frontend.components.sidebar.product', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-              <div class="main_container collection col-lg-9 col-md-12 col-sm-12">
+              <div class="main_container collection col-lg-12 col-md-12 col-sm-12">
                 <div class="block-des">
-                  <div class="img">
-                    <img class="image_cate_thumb none" width="80" height="80" src="<?php echo e($image); ?>"  alt=""/>
-                  </div>
+                 
                   <div class="des">
-                    <h1 class="collectiontitle"><?php echo e($title); ?></h1>
+                    <h1 class="collectiontitle">Tìm kiếm <?php if(isset($params['keyword']) && $params['keyword'] != ''): ?><?php echo ': ' . $params['keyword']; ?><?php endif; ?></h1>
                   </div>
                 </div>
 
@@ -118,10 +102,7 @@
         </div>
       </div>
   </div>
+  <br>
 <?php $__env->stopSection(); ?>
-<?php $__env->startPush('js_filter'); ?>
-  <script>
 
-  </script>
-<?php $__env->stopPush(); ?>
-<?php echo $__env->make('frontend.layouts.default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/tuannguyenduy/Sites/ttech/ttech/resources/views/frontend/pages/product/category.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('frontend.layouts.default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/tuannguyenduy/Sites/ttech/ttech/resources/views/frontend/pages/search/index.blade.php ENDPATH**/ ?>

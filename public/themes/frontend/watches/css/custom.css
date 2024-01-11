@@ -1,5 +1,5 @@
 .header {
-    background: #0f5b99;
+    background: #09629e;
 }
 
 .header_nav_main {
@@ -16,4 +16,20 @@
 
 .header .contact-phone p {
     color: #fff;
+}
+
+.title-block {
+    border-bottom: solid 2px #09629e;
+}
+
+.title-block a, .title-block span {
+    background: #09629e;
+}
+
+.section_maybe_iwish .slide-iwish {
+    border: solid 2px #09629e;
+}
+
+.section_blog .item_blog_base .thumb .thead {
+    background: #09629e;
 }
