@@ -69,14 +69,8 @@
         <div class="row tablet">
           <div id="copyright" class="col-lg-6 col-md-6 col-12">
             <div class="wsp">
-              Bản quyền thuộc về <a href="https://www.facebook.com/manhweb/">Creative</a>
-              <span class="opacity1">
-                Cung cấp bởi 
-                 <a href="https://www.facebook.com/manhweb/" rel="noopener" title="Sapo" target="_blank">ManhTuan</a> 
-              </span>
             </div>
           </div>
-          
         </div>
       </div>
       
