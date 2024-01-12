@@ -9,4 +9,3 @@
 <div id="loading">
   <div id="overlay" class="overlay"><i class="fa fa-spinner fa-pulse fa-5x fa-fw "></i></div>
 </div>
-<?php /**PATH /Users/tuannguyenduy/Sites/ttech/ttech/resources/views/admin/panels/footer.blade.php ENDPATH**/ ?>
