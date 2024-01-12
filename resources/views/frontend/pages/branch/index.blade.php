@@ -100,7 +100,7 @@
         <aside class="sidebar">
           <div class="sidebar__header">
             <h2 class="sidebar__title">
-              Đơn hàng (6 sản phẩm)
+              Đơn hàng ({{ count(session('cart')) }} sản phẩm)
             </h2>
           </div>
           <div class="sidebar__content">
