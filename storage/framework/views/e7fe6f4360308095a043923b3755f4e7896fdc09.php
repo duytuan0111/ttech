@@ -5,14 +5,15 @@
         <div class="col-lg-6 col-12">
           <h4 class="title-menu">
             <span>
-              {{ $web_information->information->site_name ?? '' }}
+              <?php echo e($web_information->information->site_name ?? ''); ?>
+
             </span>
           </h4>
           <ul>
-            <li>Copyright@ 2024 {{ $web_information->information->site_name ?? '' }}</li>
-            <li>Địa chỉ: {{ $web_information->information->address ?? '' }}</li>
-            <li>Điện thoại: <a class="fone" href="tel:{{ $web_information->information->phone ?? '' }}">{{ $web_information->information->phone ?? '' }}</a> 
-              - Email: <a href="mailto:{{ $web_information->information->email ?? '' }}">{{ $web_information->information->email ?? '' }}</a></li>
+            <li>Copyright@ 2024 <?php echo e($web_information->information->site_name ?? ''); ?></li>
+            <li>Địa chỉ: <?php echo e($web_information->information->address ?? ''); ?></li>
+            <li>Điện thoại: <a class="fone" href="tel:<?php echo e($web_information->information->phone ?? ''); ?>"><?php echo e($web_information->information->phone ?? ''); ?></a> 
+              - Email: <a href="mailto:<?php echo e($web_information->information->email ?? ''); ?>"><?php echo e($web_information->information->email ?? ''); ?></a></li>
           </ul>
         </div>
         <div class="col-lg-6 col-12">
@@ -22,8 +23,8 @@
             </span>
           </h4>
           <div class="mail_footer subscribe">
-            <form  class="newsletter-form form_ajax"  data-toggle="validator" action="{{ route('frontend.contact.store') }}" method="post" >
-              @csrf
+            <form  class="newsletter-form form_ajax"  data-toggle="validator" action="<?php echo e(route('frontend.contact.store')); ?>" method="post" >
+              <?php echo csrf_field(); ?>
               <div class="input-group">
                 <div class="groupiput">
                   <input aria-label="Địa chỉ Email" type="email" class="form-control" placeholder="Nhập email của bạn" name="email" required autocomplete="off" />
@@ -37,21 +38,21 @@
             </form>
             <div class="social-footer">
               <div class="social-buttons">
-                @isset($web_information->social->facebook)
-                <a href="{{ $web_information->social->facebook ?? 'https://facebook.com/' }}" class="social-button facebook" title="Theo dõi trên Facebook"><i class="fab fa-facebook-f"></i></a>
-                @endisset
+                <?php if(isset($web_information->social->facebook)): ?>
+                <a href="<?php echo e($web_information->social->facebook ?? 'https://facebook.com/'); ?>" class="social-button facebook" title="Theo dõi trên Facebook"><i class="fab fa-facebook-f"></i></a>
+                <?php endif; ?>
 
-                @isset($web_information->social->twitter)
-                <a href="{{ $web_information->social->twitter ?? 'https://twitter.com/' }}" class="social-button twitter" title="Theo dõi trên Twitter"><i class="fab fa-twitter"></i></a>
-                @endisset
+                <?php if(isset($web_information->social->twitter)): ?>
+                <a href="<?php echo e($web_information->social->twitter ?? 'https://twitter.com/'); ?>" class="social-button twitter" title="Theo dõi trên Twitter"><i class="fab fa-twitter"></i></a>
+                <?php endif; ?>
 
-                @isset($web_information->social->gmail)
-                <a href="{{ $web_information->social->gmail ?? 'https://gmail.com/' }}" class="social-button google" title="Theo dõi trên Google"><i class="fab fa-google"></i></a>
-                @endisset
+                <?php if(isset($web_information->social->gmail)): ?>
+                <a href="<?php echo e($web_information->social->gmail ?? 'https://gmail.com/'); ?>" class="social-button google" title="Theo dõi trên Google"><i class="fab fa-google"></i></a>
+                <?php endif; ?>
                 
-                @isset($web_information->social->youtube)
-                <a href="{{ $web_information->social->youtube ?? 'https://youtube.com/' }}" class="social-button youtube" title="Theo dõi trên Youtube"><i class="fab fa-youtube"></i></a>
-                @endisset
+                <?php if(isset($web_information->social->youtube)): ?>
+                <a href="<?php echo e($web_information->social->youtube ?? 'https://youtube.com/'); ?>" class="social-button youtube" title="Theo dõi trên Youtube"><i class="fab fa-youtube"></i></a>
+                <?php endif; ?>
               </div>
             </div>
           </div>
@@ -82,7 +83,7 @@
 
 <div class="bottom-nav-bar-mobile">
   <div class="inner-group container">
-    <div class="itembar" onclick="location.href='{{ route('frontend.home') }}';">
+    <div class="itembar" onclick="location.href='<?php echo e(route('frontend.home')); ?>';">
       <div class="bar-menu">
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="iconhome" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <g> <g> <path d="M506.555,208.064L263.859,30.367c-4.68-3.426-11.038-3.426-15.716,0L5.445,208.064    c-5.928,4.341-7.216,12.665-2.875,18.593s12.666,7.214,18.593,2.875L256,57.588l234.837,171.943c2.368,1.735,5.12,2.57,7.848,2.57    c4.096,0,8.138-1.885,10.744-5.445C513.771,220.729,512.483,212.405,506.555,208.064z"/> </g> </g> <g> <g> <path d="M442.246,232.543c-7.346,0-13.303,5.956-13.303,13.303v211.749H322.521V342.009c0-36.68-29.842-66.52-66.52-66.52    s-66.52,29.842-66.52,66.52v115.587H83.058V245.847c0-7.347-5.957-13.303-13.303-13.303s-13.303,5.956-13.303,13.303v225.053    c0,7.347,5.957,13.303,13.303,13.303h133.029c6.996,0,12.721-5.405,13.251-12.267c0.032-0.311,0.052-0.651,0.052-1.036v-128.89    c0-22.009,17.905-39.914,39.914-39.914s39.914,17.906,39.914,39.914v128.89c0,0.383,0.02,0.717,0.052,1.024    c0.524,6.867,6.251,12.279,13.251,12.279h133.029c7.347,0,13.303-5.956,13.303-13.303V245.847    C455.549,238.499,449.593,232.543,442.246,232.543z"/> </g> </g></svg>
@@ -103,7 +104,7 @@
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" id="iconcart" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512"><path d="m504.399 185.065c-6.761-8.482-16.904-13.348-27.83-13.348h-98.604l-53.469-122.433c-3.315-7.591-12.157-11.06-19.749-7.743-7.592 3.315-11.059 12.158-7.743 19.75l48.225 110.427h-178.458l48.225-110.427c3.315-7.592-.151-16.434-7.743-19.75-7.591-3.317-16.434.15-19.749 7.743l-53.469 122.434h-98.604c-10.926 0-21.069 4.865-27.83 13.348-6.637 8.328-9.086 19.034-6.719 29.376l52.657 230c3.677 16.06 17.884 27.276 34.549 27.276h335.824c16.665 0 30.872-11.216 34.549-27.276l52.657-230.001c2.367-10.342-.082-21.048-6.719-29.376zm-80.487 256.652h-335.824c-2.547 0-4.778-1.67-5.305-3.972l-52.657-229.998c-.413-1.805.28-3.163.936-3.984.608-.764 1.985-2.045 4.369-2.045h85.503l-3.929 8.997c-3.315 7.592.151 16.434 7.743 19.75 1.954.854 3.99 1.258 5.995 1.258 5.782 0 11.292-3.363 13.754-9l9.173-21.003h204.662l9.173 21.003c2.462 5.638 7.972 9 13.754 9 2.004 0 4.041-.404 5.995-1.258 7.592-3.315 11.059-12.158 7.743-19.75l-3.929-8.997h85.503c2.384 0 3.761 1.281 4.369 2.045.655.822 1.349 2.18.936 3.983l-52.657 230c-.528 2.301-2.76 3.971-5.307 3.971z"/><path d="m166 266.717c-8.284 0-15 6.716-15 15v110c0 8.284 6.716 15 15 15s15-6.716 15-15v-110c0-8.284-6.715-15-15-15z"/><path d="m256 266.717c-8.284 0-15 6.716-15 15v110c0 8.284 6.716 15 15 15s15-6.716 15-15v-110c0-8.284-6.716-15-15-15z"/><path d="m346 266.717c-8.284 0-15 6.716-15 15v110c0 8.284 6.716 15 15 15s15-6.716 15-15v-110c-.001-8.284-6.716-15-15-15z"/></svg>
         </div>
-        <a href="{{ route('frontend.order.cart') }}">Giỏ hàng</a>
+        <a href="<?php echo e(route('frontend.order.cart')); ?>">Giỏ hàng</a>
       </div>
     </div>
     <div class="itembar" onclick="location.href='blogs/all.html';">
@@ -120,9 +121,9 @@
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="iconwishlist" x="0px" y="0px" viewBox="0 0 391.837 391.837" style="enable-background:new 0 0 391.837 391.837;" xml:space="preserve"> <g> <path style="fill:#D7443E;" d="M285.257,35.528c58.743,0.286,106.294,47.836,106.58,106.58   c0,107.624-195.918,214.204-195.918,214.204S0,248.165,0,142.108c0-58.862,47.717-106.58,106.58-106.58l0,0   c36.032-0.281,69.718,17.842,89.339,48.065C215.674,53.517,249.273,35.441,285.257,35.528z"></path> </g>                </svg>  
         </div>
-        <a href="{{ route('frontend.contact') }}">Liên hệ</a>
+        <a href="<?php echo e(route('frontend.contact')); ?>">Liên hệ</a>
       </div>
     </div>
     
   </div>
-</div>
+</div><?php /**PATH /Users/tuannguyenduy/Sites/ttech/ttech/resources/views/frontend/blocks/footer/styles/default.blade.php ENDPATH**/ ?>

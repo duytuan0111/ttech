@@ -4,8 +4,8 @@
         <div class="row">
           <div class="col-lg-2 col-xl-3 col-md-3 col-6 col-logo">
             
-            <a href="{{ route('frontend.home') }}" class="logo">  
-              <img width="170" height="43" src="{{ $web_information->image->logo_header ?? '' }}" alt="pocomart">
+            <a href="<?php echo e(route('frontend.home')); ?>" class="logo">  
+              <img width="170" height="43" src="<?php echo e($web_information->image->logo_header ?? ''); ?>" alt="pocomart">
             </a>
             
           </div>
@@ -18,8 +18,8 @@
             <!-- search -->
             <div class="theme-search-smart">
               <div class="header_search theme-searchs">
-                <form action="{{ route('frontend.search.index') }}" method="get" class="input-group search-bar theme-header-search-form ultimate-search" role="search">
-                  <input type="text" aria-label="Tìm sản phẩm" name="keyword"  value="{{ $params['keyword'] ?? '' }}"autocomplete="off" placeholder="Tìm kiếm sản phẩm..." class="search-auto input-group-field auto-search" required="">
+                <form action="<?php echo e(route('frontend.search.index')); ?>" method="get" class="input-group search-bar theme-header-search-form ultimate-search" role="search">
+                  <input type="text" aria-label="Tìm sản phẩm" name="keyword"  value="<?php echo e($params['keyword'] ?? ''); ?>"autocomplete="off" placeholder="Tìm kiếm sản phẩm..." class="search-auto input-group-field auto-search" required="">
                   <span class="input-group-btn">
                     <button type="submit" class="btn icon-fallback-text" aria-label="Justify">
                       <svg enable-background="new 0 0 612.01 612.01" version="1.1" viewBox="0 0 612.01 612.01" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
@@ -32,15 +32,15 @@
             </div>
             <div class="contact-phone">
               <p>
-                @lang('Tư vấn hỗ trợ')
+                <?php echo app('translator')->get('Tư vấn hỗ trợ'); ?>
               </p>
-              <a href="tel:{{ $web_information->information->phone ?? '' }}">{{ $web_information->information->phone ?? '' }}</a> 
+              <a href="tel:<?php echo e($web_information->information->phone ?? ''); ?>"><?php echo e($web_information->information->phone ?? ''); ?></a> 
             </div>
             <div class="contact-phone not">
               <p>
-                @lang('Email')
+                <?php echo app('translator')->get('Email'); ?>
               </p>
-              <a href="mailto:{{ $web_information->information->email ?? '' }}">{{ $web_information->information->email ?? '' }}</a> 
+              <a href="mailto:<?php echo e($web_information->information->email ?? ''); ?>"><?php echo e($web_information->information->email ?? ''); ?></a> 
             </div>
           </div>
           <div class="col-lg-1 col-md-2 col-6 col-account order-2 order-md-3">
@@ -48,9 +48,9 @@
               
               <li class="cart-drop">
                 <div class="icon">
-                  <a class="img_hover_cart" href="{{ route('frontend.order.cart') }}" title="Giỏ hàng">
+                  <a class="img_hover_cart" href="<?php echo e(route('frontend.order.cart')); ?>" title="Giỏ hàng">
                     <svg enable-background="new 0 0 407.453 407.453" version="1.1" viewBox="0 0 407.45 407.45" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"> <g fill="#fff"> <path d="m255.1 116.52c4.487 0 8.129-3.633 8.129-8.129 0-4.495-3.642-8.129-8.129-8.129h-111.61c-4.487 0-8.129 3.633-8.129 8.129 0 4.495 3.642 8.129 8.129 8.129h111.61z"></path> <path d="m367.06 100.26h-55.372c-4.487 0-8.129 3.633-8.129 8.129 0 4.495 3.642 8.129 8.129 8.129h47.243v274.68h-310.41v-274.68h44.536c4.487 0 8.129-3.633 8.129-8.129 0-4.495-3.642-8.129-8.129-8.129h-52.664c-4.487 0-8.129 3.633-8.129 8.129v290.94c0 4.495 3.642 8.129 8.129 8.129h326.67c4.487 0 8.129-3.633 8.129-8.129v-290.94c0-4.495-3.634-8.128-8.129-8.128z"></path> <path d="m282.59 134.8c4.487 0 8.129-3.633 8.129-8.129v-59.273c-1e-3 -37.156-40.115-67.394-89.618-67.394-49.308 0-89.414 30.238-89.414 67.394v59.274c0 4.495 3.642 8.129 8.129 8.129s8.129-3.633 8.129-8.129v-59.274c0-28.198 32.823-51.137 73.36-51.137 40.334 0 73.157 22.939 73.157 51.137v59.274c-1e-3 4.495 3.633 8.128 8.128 8.128z"></path> <path d="m98.892 147.57c0 11.526 9.389 20.907 20.923 20.907s20.923-9.38 20.923-20.907c0-4.495-3.642-8.129-8.129-8.129s-8.129 3.633-8.129 8.129c0 2.561-2.089 4.65-4.666 4.65-2.569 0-4.666-2.089-4.666-4.65 0-4.495-3.642-8.129-8.129-8.129s-8.127 3.634-8.127 8.129z"></path> <path d="m282.59 168.47c11.534 0 20.923-9.38 20.923-20.907 0-4.495-3.642-8.129-8.129-8.129s-8.129 3.633-8.129 8.129c0 2.561-2.089 4.65-4.666 4.65s-4.666-2.089-4.666-4.65c0-4.495-3.642-8.129-8.129-8.129s-8.129 3.633-8.129 8.129c2e-3 11.526 9.39 20.907 20.925 20.907z"></path> </g> </svg>
-                    <span class="count_item count_item_pr">{{ count((array) session('cart') ?? 0) }}</span>
+                    <span class="count_item count_item_pr"><?php echo e(count((array) session('cart') ?? 0)); ?></span>
                   </a>
                 </div>
               </li>
@@ -70,15 +70,15 @@
               </div>
               <div class="list_menu_header col-lg-3 col-md-3">
                 <ul class="ul_menu site-nav-vetical">
-                  @php
+                  <?php
                     $params_taxonomy['status'] = App\Consts::TAXONOMY_STATUS['active'];
                     $params_taxonomy['taxonomy'] = App\Consts::TAXONOMY['product'];
                     $taxonomys = App\Http\Services\ContentService::getCmsTaxonomy($params_taxonomy)->get();
-                  @endphp
-                  @isset($taxonomys)
-                    @foreach ($taxonomys as $item)
-                      @if ($item->parent_id == 0 || $item->parent_id == null)
-                        @php
+                  ?>
+                  <?php if(isset($taxonomys)): ?>
+                    <?php $__currentLoopData = $taxonomys; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <?php if($item->parent_id == 0 || $item->parent_id == null): ?>
+                        <?php
                           $title = $item->json_params->title->{$locale} ?? $item->title;
                           $brief = $item->json_params->brief->{$locale} ?? $item->brief;
                           $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $title, $item->id);
@@ -88,66 +88,67 @@
                           $taxonomys_childs = $taxonomys->filter(function ($it, $key) use ($item) {
                               return $it->parent_id == $item->id;
                           });
-                        @endphp
+                        ?>
                         <li class="nav_item lev-1 lv1 li_check">
-                          <a class="lazyload" style="background-image: url('{{ $image }}');" href="{{ $alias_category }}" title="{{ $title }}">
-                            {{ $title }}
-                            @if(count($taxonomys_childs)!=0)
+                          <a class="lazyload" style="background-image: url('<?php echo e($image); ?>');" href="<?php echo e($alias_category); ?>" title="<?php echo e($title); ?>">
+                            <?php echo e($title); ?>
+
+                            <?php if(count($taxonomys_childs)!=0): ?>
                             <i class="fa fa-angle-right"></i>
-                            @endif
+                            <?php endif; ?>
                           </a>
-                          @if(count($taxonomys_childs)!=0)
+                          <?php if(count($taxonomys_childs)!=0): ?>
                             <i class="fa fa-angle-down"></i>
-                          @endif
-                          @if(count($taxonomys_childs)!=0)
+                          <?php endif; ?>
+                          <?php if(count($taxonomys_childs)!=0): ?>
                           <ul class="ul_content_right_1 row">
-                            @foreach ($taxonomys_childs as $item_child)
-                            @php
+                            <?php $__currentLoopData = $taxonomys_childs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item_child): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
                               $title_child = $item_child->json_params->title->{$locale} ?? $item_child->title;
                               $image_child= $item_child->json_params->image != '' ? $item_child->json_params->image : null;
                               $alias_category = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $title_child, $item_child->id);
-                            @endphp
+                            ?>
                             <li class="nav_item has-subnav lv2 col-lg-3 col-md-12">
                               <h4 class="text-normal">
-                                <a style="background-image: url('{{ $image_child }}');" href="{{ $alias_category }}" title="{{ $title_child }}" class=" hot">{{ $title_child }}</a>
+                                <a style="background-image: url('<?php echo e($image_child); ?>');" href="<?php echo e($alias_category); ?>" title="<?php echo e($title_child); ?>" class=" hot"><?php echo e($title_child); ?></a>
                               </h4>
                               <ul class="ul_content_right_2">
-                                @php
+                                <?php
                                   $params['status'] = App\Consts::POST_STATUS['active'];
                                   $params['is_type'] = App\Consts::POST_TYPE['product'];
                                   $params['taxonomy_id'] = $item_child->id;
                                   $rows = App\Http\Services\ContentService::getCmsPost($params)
                                       ->limit(4)
                                       ->get();
-                                @endphp
-                                @if($rows)
-                                  @foreach ($rows as $item_sub)
-                                  @php
+                                ?>
+                                <?php if($rows): ?>
+                                  <?php $__currentLoopData = $rows; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item_sub): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                  <?php
                                     $title = $item_sub->json_params->title->{$locale} ?? $item_sub->title;
                                     $alias = App\Helpers::generateRoute(App\Consts::TAXONOMY['product'], $title, $item_sub->id, 'detail', $item_sub->taxonomy_title);
-                                  @endphp
+                                  ?>
                                   <li class="nav_item lv3">
-                                    <a href="{{ $alias }}" title="{{ $title }}">- {{ $title }}</a>
+                                    <a href="<?php echo e($alias); ?>" title="<?php echo e($title); ?>">- <?php echo e($title); ?></a>
                                   </li>
-                                  @endforeach
-                                @endif
+                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
                               </ul>
                             </li>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                           </ul>
-                          @endif
+                          <?php endif; ?>
                         </li>
-                      @endif  
-                    @endforeach    
-                  @endisset
+                      <?php endif; ?>  
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>    
+                  <?php endif; ?>
                 </ul>
               </div>
             </div>
             <div class="bg-header-nav">
               <nav class="header-nav">
                 <ul class="item_big">
-                  @isset($menu)
-                  @php
+                  <?php if(isset($menu)): ?>
+                  <?php
                     $main_menu = $menu->first(function ($item, $key) {
                         return $item->menu_type == 'header' && ($item->parent_id == null || $item->parent_id == 0);
                     });
@@ -182,12 +183,12 @@
                         }
                         echo $content;
                     }
-                  @endphp
-                @endisset
+                  ?>
+                <?php endif; ?>
                 </ul>
               </nav>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div><?php /**PATH /Users/tuannguyenduy/Sites/ttech/ttech/resources/views/frontend/blocks/header/styles/default.blade.php ENDPATH**/ ?>
