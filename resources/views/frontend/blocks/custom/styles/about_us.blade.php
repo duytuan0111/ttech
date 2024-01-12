@@ -10,7 +10,6 @@
         <div class="swiper-container">
           <div class="swiper-wrapper">
             @isset($taxonomys)
-              @for($i=0;$i<2;$i++)
                 @foreach ($taxonomys as $item_sub)
                   @php
                     $title = $item_sub->json_params->title->{$locale} ?? $item_sub->title;
@@ -30,7 +29,6 @@
                     </div>
                   @endif
                 @endforeach
-              @endfor
             @endisset  
           </div>
         </div>
