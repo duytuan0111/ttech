@@ -200,7 +200,7 @@ class OrderController extends Controller
                     ],
                     function ($message) use ($email) {
                         $message->to($email);
-                        $message->subject(__('[Xac nhan dat TOUR]'));
+                        $message->subject(__('[Xác nhận đặt hàng]'));
                     }
                 );
             DB::commit();
