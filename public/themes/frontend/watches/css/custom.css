@@ -33,3 +33,15 @@
 .section_blog .item_blog_base .thumb .thead {
     background: #09629e;
 }
+
+.section_category .cate-item .image {
+    border: 1px solid #f4f4f4;
+}
+
+.title-block a, .title-block span {
+    color: #fff !important;
+}
+
+.title-block a:hover, .title-block span:hover {
+    color: #ffb416 !important;
+}

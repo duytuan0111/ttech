@@ -44,13 +44,12 @@
 
     <div class="box box-primary">
       <div class="box-header with-border">
-        <h3 class="box-title"><?php echo app('translator')->get('Update form'); ?></h3>
+        <h3 class="box-title"><?php echo app('translator')->get('Create form'); ?></h3>
       </div>
       <!-- /.box-header -->
       <!-- form start -->
-      <form role="form" action="<?php echo e(route(Request::segment(2) . '.update', $detail->id)); ?>" method="POST">
+      <form role="form" action="<?php echo e(route(Request::segment(2) . '.store')); ?>" method="POST">
         <?php echo csrf_field(); ?>
-        <?php echo method_field('PUT'); ?>
         <div class="box-body">
           <!-- Custom Tabs -->
           <div class="nav-tabs-custom">
@@ -71,12 +70,13 @@
               <div class="tab-pane active" id="tab_1">
                 <div class="row">
                   <div class="col-md-6">
+
                     <div class="form-group">
                       <label><?php echo app('translator')->get('Taxonomy'); ?> <small class="text-red">*</small></label>
                       <select name="taxonomy" id="taxonomy" class="form-control select2" required>
                         <option value=""><?php echo app('translator')->get('Please select'); ?></option>
                         <?php $__currentLoopData = App\Consts::TAXONOMY; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                          <option value="<?php echo e($key); ?>" <?php echo e($key == $detail->taxonomy ? 'selected' : ''); ?>>
+                          <option value="<?php echo e($key); ?>" <?php echo e(old('taxonomy') == $key ? 'selected' : ''); ?>>
                             <?php echo e(__($value)); ?></option>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
@@ -84,13 +84,13 @@
                     <div class="form-group">
                       <label><?php echo app('translator')->get('Title'); ?> <small class="text-red">*</small></label>
                       <input type="text" class="form-control" name="title" placeholder="<?php echo app('translator')->get('Title'); ?>"
-                        value="<?php echo e($detail->title); ?>" required>
+                        value="<?php echo e(old('title')); ?>" required>
                     </div>
 
                     <div class="form-group">
                       <label><?php echo app('translator')->get('Order'); ?></label>
                       <input type="number" class="form-control" name="iorder" placeholder="<?php echo app('translator')->get('iorder'); ?>"
-                        value="<?php echo e($detail->iorder); ?>">
+                        value="<?php echo e(old('iorder')); ?>">
                     </div>
                     <div class="form-group">
                       <label><?php echo app('translator')->get('Image'); ?></label>
@@ -102,13 +102,11 @@
                           </a>
                         </span>
                         <input id="image" class="form-control" type="text" name="json_params[image]"
-                          placeholder="<?php echo app('translator')->get('image_link'); ?>..."
-                          value="<?php echo e(isset($detail->json_params->image) ? $detail->json_params->image : old('json_params[image]')); ?>">
+                          placeholder="<?php echo app('translator')->get('image_link'); ?>..." value="<?php echo e(old('json_params[image]')); ?>">
                       </div>
                       <div id="image-holder" style="margin-top:15px;max-height:100px;">
-                        <?php if(isset($detail->json_params->image) && $detail->json_params->image != ''): ?>
-                          <img style="height: 5rem;"
-                            src="<?php echo e(isset($detail->json_params->image) ? $detail->json_params->image : old('json_params[image]')); ?>">
+                        <?php if(old('json_params[image]') != ''): ?>
+                          <img style="height: 5rem;" src="<?php echo e(old('json_params[image]')); ?>">
                         <?php endif; ?>
 
                       </div>
@@ -120,77 +118,35 @@
                       <label><?php echo app('translator')->get('Parent element'); ?></label>
                       <select name="parent_id" id="parent_id" class="form-control select2">
                         <option value="">== <?php echo app('translator')->get('ROOT'); ?> ==</option>
-                        <?php $__currentLoopData = $taxonomys; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                          <?php if(($item->parent_id == 0 || $item->parent_id == null) && $item->taxonomy == $detail->taxonomy): ?>
-                            <option value="<?php echo e($item->id); ?>" <?php echo e($detail->parent_id == $item->id ? 'selected' : ''); ?>>
-                              <?php echo e($item->title); ?></option>
-
-                            <?php $__currentLoopData = $taxonomys; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sub): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                              <?php if($item->id == $sub->parent_id): ?>
-                                <option value="<?php echo e($sub->id); ?>"
-                                  <?php echo e($detail->parent_id == $sub->id ? 'selected' : ''); ?>>- - <?php echo e($sub->title); ?>
-
-                                </option>
-
-                                <?php $__currentLoopData = $taxonomys; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sub_child): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                  <?php if($sub->id == $sub_child->parent_id): ?>
-                                    <option value="<?php echo e($sub_child->id); ?>"
-                                      <?php echo e($detail->parent_id == $sub_child->id ? 'selected' : ''); ?>>- - - -
-                                      <?php echo e($sub_child->title); ?></option>
-                                  <?php endif; ?>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                              <?php endif; ?>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                          <?php endif; ?>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
-
                     </div>
                     <div class="form-group">
                       <label><?php echo app('translator')->get('Status'); ?></label>
                       <div class="form-control">
                         <label>
-                          <input type="radio" name="status" value="active"
-                            <?php echo e($detail->status == 'active' ? 'checked' : ''); ?>>
+                          <input type="radio" name="status" value="active" checked="">
                           <small><?php echo app('translator')->get('active'); ?></small>
                         </label>
                         <label>
-                          <input type="radio" name="status" value="deactive"
-                            <?php echo e($detail->status == 'deactive' ? 'checked' : ''); ?> class="ml-15">
+                          <input type="radio" name="status" value="deactive" class="ml-15">
                           <small><?php echo app('translator')->get('deactive'); ?></small>
                         </label>
                       </div>
                     </div>
-
                     <div class="form-group">
                       <label><?php echo app('translator')->get('Is featured'); ?></label>
                       <div class="form-control">
                         <label>
-                          <input type="radio" name="is_featured" value="1"
-                            <?php echo e($detail->is_featured == '1' ? 'checked' : ''); ?>>
+                          <input type="radio" name="is_featured" value="1">
                           <small><?php echo app('translator')->get('true'); ?></small>
                         </label>
                         <label>
-                          <input type="radio" name="is_featured" value="0" class="ml-15"
-                            <?php echo e($detail->is_featured == '0' ? 'checked' : ''); ?>>
+                          <input type="radio" name="is_featured" value="0" class="ml-15" checked="">
                           <small><?php echo app('translator')->get('false'); ?></small>
                         </label>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label><?php echo app('translator')->get('Hiển thị trang chủ'); ?></label>
-                      <div class="form-control">
-                        <label>
-                          <input type="radio" name="is_show_home" value="1" <?php echo e($detail->is_show_home == '1' ? 'checked' : ''); ?>>
-                          <small><?php echo app('translator')->get('true'); ?></small>
-                        </label>
-                        <label>
-                          <input type="radio" name="is_show_home" value="0" <?php echo e($detail->is_show_home == '0' ? 'checked' : ''); ?> class="ml-15">
-                          <small><?php echo app('translator')->get('false'); ?></small>
-                        </label>
-                      </div>
-                    </div>
 
                     <div class="form-group">
                       <label><?php echo app('translator')->get('Image background'); ?></label>
@@ -203,18 +159,16 @@
                         </span>
                         <input id="image_background" class="form-control" type="text"
                           name="json_params[image_background]" placeholder="<?php echo app('translator')->get('image_link'); ?>..."
-                          value="<?php echo e($detail->json_params->image_background ?? old('json_params[image_background]')); ?>">
+                          value="<?php echo e(old('json_params[image_background]')); ?>">
                       </div>
                       <div id="image_background-holder" style="margin-top:15px;max-height:100px;">
-                        <?php if(isset($detail->json_params->image_background) && $detail->json_params->image_background != ''): ?>
-                          <img style="height: 5rem;"
-                            src="<?php echo e($detail->json_params->image_background ?? old('json_params[image_background]')); ?>">
+                        <?php if(old('json_params[image_background]') != ''): ?>
+                          <img style="height: 5rem;" src="<?php echo e(old('json_params[image_background]')); ?>">
                         <?php endif; ?>
                       </div>
                     </div>
 
                   </div>
-
                   <div class="col-md-12">
                     <div class="form-group">
                       <label>URL tùy chọn</label>
@@ -224,24 +178,25 @@
                         <i class="fa fa-info-circle"></i>
                         Maximum 100 characters in the group: "A-Z", "a-z", "0-9" and "-_" )
                       </small>
-                      <input name="alias" class="form-control" value="<?php echo e($detail->alias ?? old('alias')); ?>" />
+                      <input name="alias" class="form-control" value="<?php echo e(old('alias')); ?>" />
                     </div>
                   </div>
 
                   <div class="col-md-12">
                     <div class="form-group">
                       <label><?php echo app('translator')->get('Description'); ?></label>
-                      <textarea name="json_params[brief][vi]" class="form-control" rows="5"><?php echo e($detail->json_params->brief->vi ?? old('json_params[brief][vi]')); ?></textarea>
+                      <textarea name="json_params[brief][vi]" class="form-control" rows="5"><?php echo e(old('json_params[brief][vi]')); ?></textarea>
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
                       <div class="form-group">
                         <label><?php echo app('translator')->get('Content'); ?></label>
-                        <textarea name="json_params[content][vi]" class="form-control" id="content_vi"><?php echo e($detail->json_params->content->vi ?? old('json_params[content][vi]')); ?></textarea>
+                        <textarea name="json_params[content][vi]" class="form-control" id="content_vi"><?php echo e(old('json_params[content][vi]')); ?></textarea>
                       </div>
                     </div>
                   </div>
+
                   <div class="col-md-12">
                     <hr style="border-top: dashed 2px #a94442; margin: 10px 0px;">
                   </div>
@@ -249,23 +204,24 @@
                     <div class="form-group">
                       <label><?php echo app('translator')->get('seo_title'); ?></label>
                       <input name="json_params[seo_title]" class="form-control"
-                        value="<?php echo e($detail->json_params->seo_title ?? old('json_params[seo_title]')); ?>">
+                        value="<?php echo e(old('json_params[seo_title]')); ?>">
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
                       <label><?php echo app('translator')->get('seo_keyword'); ?></label>
                       <input name="json_params[seo_keyword]" class="form-control"
-                        value="<?php echo e($detail->json_params->seo_keyword ?? old('json_params[seo_keyword]')); ?>">
+                        value="<?php echo e(old('json_params[seo_keyword]')); ?>">
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
                       <label><?php echo app('translator')->get('seo_description'); ?></label>
                       <input name="json_params[seo_description]" class="form-control"
-                        value="<?php echo e($detail->json_params->seo_description ?? old('json_params[seo_description]')); ?>">
+                        value="<?php echo e(old('json_params[seo_description]')); ?>">
                     </div>
                   </div>
+
                 </div>
 
               </div>
@@ -286,6 +242,7 @@
       </form>
     </div>
   </section>
+
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('script'); ?>
@@ -316,7 +273,6 @@
             }
           });
           _html.html(_content);
-
           $('#parent_id').select2();
         }
       });
@@ -325,4 +281,4 @@
   </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('admin.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/tuannguyenduy/Sites/ttech/ttech/resources/views/admin/pages/cms_taxonomys/edit.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('admin.layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/tuannguyenduy/Sites/ttech/ttech/resources/views/admin/pages/cms_taxonomys/create.blade.php ENDPATH**/ ?>
