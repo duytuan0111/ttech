@@ -176,6 +176,20 @@
                     </div>
 
                     <div class="form-group">
+                      <label>@lang('Hiển thị trang chủ')</label>
+                      <div class="form-control">
+                        <label>
+                          <input type="radio" name="is_show_home" value="1" {{ $detail->is_show_home == '1' ? 'checked' : '' }}>
+                          <small>@lang('true')</small>
+                        </label>
+                        <label>
+                          <input type="radio" name="is_show_home" value="0" {{ $detail->is_show_home == '0' ? 'checked' : '' }} class="ml-15">
+                          <small>@lang('false')</small>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
                       <label>@lang('Image background')</label>
                       <div class="input-group">
                         <span class="input-group-btn">
