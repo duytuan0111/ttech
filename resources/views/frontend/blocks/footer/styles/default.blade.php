@@ -82,12 +82,12 @@
 
 <div class="bottom-nav-bar-mobile">
   <div class="inner-group container">
-    <div class="itembar" onclick="location.href='{{ route('frontend.home') }}';">
+    <div class="itembar" onclick="location.href='{{ route('frontend.home') }}'s">
       <div class="bar-menu">
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="iconhome" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <g> <g> <path d="M506.555,208.064L263.859,30.367c-4.68-3.426-11.038-3.426-15.716,0L5.445,208.064    c-5.928,4.341-7.216,12.665-2.875,18.593s12.666,7.214,18.593,2.875L256,57.588l234.837,171.943c2.368,1.735,5.12,2.57,7.848,2.57    c4.096,0,8.138-1.885,10.744-5.445C513.771,220.729,512.483,212.405,506.555,208.064z"/> </g> </g> <g> <g> <path d="M442.246,232.543c-7.346,0-13.303,5.956-13.303,13.303v211.749H322.521V342.009c0-36.68-29.842-66.52-66.52-66.52    s-66.52,29.842-66.52,66.52v115.587H83.058V245.847c0-7.347-5.957-13.303-13.303-13.303s-13.303,5.956-13.303,13.303v225.053    c0,7.347,5.957,13.303,13.303,13.303h133.029c6.996,0,12.721-5.405,13.251-12.267c0.032-0.311,0.052-0.651,0.052-1.036v-128.89    c0-22.009,17.905-39.914,39.914-39.914s39.914,17.906,39.914,39.914v128.89c0,0.383,0.02,0.717,0.052,1.024    c0.524,6.867,6.251,12.279,13.251,12.279h133.029c7.347,0,13.303-5.956,13.303-13.303V245.847    C455.549,238.499,449.593,232.543,442.246,232.543z"/> </g> </g></svg>
         </div>
-        <a href="index.html">Trang chủ</a>
+        <a href="{{ route('frontend.home') }}">Trang chủ</a>
       </div>
     </div>
     <div class="itembar">
@@ -106,7 +106,7 @@
         <a href="{{ route('frontend.order.cart') }}">Giỏ hàng</a>
       </div>
     </div>
-    <div class="itembar" onclick="location.href='blogs/all.html';">
+    <div class="itembar" onclick="location.href='/tin-tuc';">
       <div class="bar-menu">
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="iconblog" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <g> <g> <path d="M467,0H45C20.187,0,0,20.187,0,45v422c0,24.813,20.187,45,45,45h422c24.813,0,45-20.187,45-45V45    C512,20.187,491.813,0,467,0z M482,467c0,8.271-6.729,15-15,15H45c-8.271,0-15-6.729-15-15V150h452V467z M482,120H30V45    c0-8.271,6.729-15,15-15h422c8.271,0,15,6.729,15,15V120z"/> </g> </g> <g> <g> <circle cx="75" cy="75" r="15"/> </g> </g> <g> <g> <circle cx="135" cy="75" r="15"/> </g> </g> <g> <g> <circle cx="195" cy="75" r="15"/> </g> </g> <g> <g> <path d="M225,180H75c-8.284,0-15,6.716-15,15v122c0,8.284,6.716,15,15,15h150c8.284,0,15-6.716,15-15V195    C240,186.716,233.284,180,225,180z M210,302H90v-92h120V302z"/> </g> </g> <g> <g> <path d="M437,302H285c-8.284,0-15,6.716-15,15s6.716,15,15,15h152c8.284,0,15-6.716,15-15S445.284,302,437,302z"/> </g> </g> <g> <g> <path d="M437,241H285c-8.284,0-15,6.716-15,15s6.716,15,15,15h152c8.284,0,15-6.716,15-15S445.284,241,437,241z"/> </g> </g> <g> <g> <path d="M437,362H75c-8.284,0-15,6.716-15,15s6.716,15,15,15h362c8.284,0,15-6.716,15-15S445.284,362,437,362z"/> </g> </g> <g> <g> <path d="M437,422H75c-8.284,0-15,6.716-15,15s6.716,15,15,15h362c8.284,0,15-6.716,15-15S445.284,422,437,422z"/> </g> </g></svg>
@@ -115,7 +115,7 @@
       </div>
     </div>
     
-    <div class="itembar" onclick="location.href='yeu-thich.html';">
+    <div class="itembar" onclick="location.href='{{ route('frontend.contact') }}';">
       <div class="bar-menu">
         <div class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="iconwishlist" x="0px" y="0px" viewBox="0 0 391.837 391.837" style="enable-background:new 0 0 391.837 391.837;" xml:space="preserve"> <g> <path style="fill:#D7443E;" d="M285.257,35.528c58.743,0.286,106.294,47.836,106.58,106.58   c0,107.624-195.918,214.204-195.918,214.204S0,248.165,0,142.108c0-58.862,47.717-106.58,106.58-106.58l0,0   c36.032-0.281,69.718,17.842,89.339,48.065C215.674,53.517,249.273,35.441,285.257,35.528z"></path> </g>                </svg>  
