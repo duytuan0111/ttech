@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th1 08, 2024 lúc 10:18 AM
--- Phiên bản máy phục vụ: 10.4.25-MariaDB
--- Phiên bản PHP: 7.4.30
+-- Thời gian đã tạo: Th1 29, 2024 lúc 04:05 AM
+-- Phiên bản máy phục vụ: 10.4.27-MariaDB
+-- Phiên bản PHP: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `ttech`
+-- Cơ sở dữ liệu: `tech`
 --
 
 -- --------------------------------------------------------
@@ -29,14 +29,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `role` int(11) NOT NULL,
   `json_information` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_information`)),
   `is_super_admin` tinyint(1) NOT NULL DEFAULT 0,
-  `status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'active',
+  `remember_token` varchar(100) DEFAULT NULL,
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -59,10 +59,10 @@ INSERT INTO `admins` (`id`, `name`, `email`, `password`, `role`, `json_informati
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -74,7 +74,7 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -121,8 +121,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -135,12 +135,12 @@ CREATE TABLE `password_resets` (
 CREATE TABLE `tb_admin_menus` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `url_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `url_link` varchar(255) DEFAULT NULL,
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'active',
-  `toolbar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) DEFAULT 'active',
+  `toolbar` varchar(255) DEFAULT NULL,
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -191,16 +191,16 @@ INSERT INTO `tb_admin_menus` (`id`, `parent_id`, `name`, `icon`, `url_link`, `io
 
 CREATE TABLE `tb_affiliate_historys` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `is_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_type` varchar(255) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
   `order_id` bigint(20) DEFAULT NULL,
   `order_total_money` double(20,2) NOT NULL DEFAULT 0.00,
   `affiliate_percent` double(20,2) NOT NULL DEFAULT 0.00,
   `affiliate_point` double(20,2) DEFAULT NULL,
   `affiliate_money` double(20,2) DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text DEFAULT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `status` varchar(255) NOT NULL DEFAULT 'pending',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -233,9 +233,9 @@ CREATE TABLE `tb_affiliate_payments` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `money` double(20,2) DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text DEFAULT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -261,13 +261,13 @@ INSERT INTO `tb_affiliate_payments` (`id`, `user_id`, `money`, `description`, `j
 
 CREATE TABLE `tb_blocks` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `block_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `block_code` varchar(255) NOT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
   `is_config` tinyint(1) NOT NULL DEFAULT 1,
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -300,20 +300,20 @@ INSERT INTO `tb_blocks` (`id`, `name`, `description`, `block_code`, `json_params
 CREATE TABLE `tb_block_contents` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `brief` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `block_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `brief` text DEFAULT NULL,
+  `content` longtext DEFAULT NULL,
+  `block_code` varchar(255) NOT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image_background` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `icon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `url_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `url_link_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `position` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `system_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `image_background` varchar(255) DEFAULT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `url_link` varchar(255) DEFAULT NULL,
+  `url_link_title` varchar(255) DEFAULT NULL,
+  `position` varchar(255) DEFAULT NULL,
+  `system_code` varchar(255) DEFAULT NULL,
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -355,18 +355,18 @@ INSERT INTO `tb_block_contents` (`id`, `parent_id`, `title`, `brief`, `content`,
 CREATE TABLE `tb_bookings` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `customer_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `customer_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `customer_note` text DEFAULT NULL,
   `department_id` bigint(20) UNSIGNED DEFAULT NULL,
   `doctor_id` bigint(20) UNSIGNED DEFAULT NULL,
   `booking_date` date DEFAULT NULL,
-  `booking_time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `admin_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `booking_time` varchar(255) DEFAULT NULL,
+  `admin_note` text DEFAULT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'new',
+  `status` varchar(255) NOT NULL DEFAULT 'new',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -381,17 +381,17 @@ CREATE TABLE `tb_bookings` (
 
 CREATE TABLE `tb_branchs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `is_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_type` varchar(255) DEFAULT NULL,
   `is_featured` tinyint(1) DEFAULT 0,
-  `name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `district` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fax` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `map` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` text DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `district` varchar(255) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `fax` varchar(255) DEFAULT NULL,
+  `map` text DEFAULT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -421,20 +421,20 @@ CREATE TABLE `tb_cms_posts` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `taxonomy_id` bigint(20) UNSIGNED DEFAULT NULL,
   `resources_id` int(11) DEFAULT NULL,
-  `is_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'post',
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_type` varchar(255) DEFAULT 'post',
+  `title` varchar(255) NOT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image_thumb` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `image_thumb` varchar(255) DEFAULT NULL,
   `is_featured` tinyint(1) NOT NULL DEFAULT 0,
   `count_visited` int(11) NOT NULL DEFAULT 0,
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `alias` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `alias` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -508,42 +508,43 @@ INSERT INTO `tb_cms_posts` (`id`, `taxonomy_id`, `resources_id`, `is_type`, `tit
 
 CREATE TABLE `tb_cms_taxonomys` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `taxonomy` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `taxonomy` varchar(255) NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) NOT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
   `is_featured` tinyint(1) NOT NULL DEFAULT 0,
+  `is_show_home` int(11) DEFAULT NULL,
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `alias` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `alias` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `tb_cms_taxonomys`
 --
 
-INSERT INTO `tb_cms_taxonomys` (`id`, `taxonomy`, `parent_id`, `title`, `json_params`, `is_featured`, `iorder`, `status`, `admin_created_id`, `admin_updated_id`, `created_at`, `updated_at`, `alias`) VALUES
-(1, 'post', NULL, 'Tin tức', '{\"title\":{\"en\":null},\"image\":null,\"image_background\":\"https:\\/\\/jcgroup.vn\\/wp-content\\/uploads\\/2022\\/09\\/01-3.png\",\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, 3, 'active', 1, 1, '2021-10-15 03:19:10', '2023-03-10 07:28:01', 'tin-tuc'),
-(57, 'product', NULL, 'Laptop Gaming', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/icon5.webp\",\"image_background\":\"\\/data\\/cms-image\\/banner\\/banner_3_tab.webp\",\"brief\":{\"vi\":\"Gi\\u1ea3m ngay khi mua online\"},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 1, NULL, 'active', 1, 1, '2024-01-04 03:31:21', '2024-01-04 08:07:26', 'laptop-gaming'),
-(58, 'product', NULL, 'Phụ kiện & thiết bị', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/icon2.webp\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'delete', 1, 1, '2024-01-04 03:38:55', '2024-01-04 09:30:57', 'phu-kien-thiet-bi'),
-(59, 'product', NULL, 'Cammera', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/icon3.webp\",\"image_background\":null,\"brief\":{\"vi\":\"Gi\\u1ea3m ngay khi mua online\"},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'active', 1, 1, '2024-01-04 03:39:13', '2024-01-04 08:20:05', 'cammera'),
-(60, 'product', NULL, 'Macbook', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/macbook-image-show-home-1624856863.png\",\"image_background\":\"\\/data\\/cms-image\\/banner\\/banner_1_tab.jpg\",\"brief\":{\"vi\":\"Gi\\u1ea3m ngay khi mua online\"},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 1, NULL, 'active', 1, 1, '2024-01-04 04:34:19', '2024-01-04 07:34:35', 'macbook'),
-(61, 'product', NULL, 'Laptop HP', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/laptop-moi-image-show-home-1624951313.jpg\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'active', 1, 1, '2024-01-04 07:17:14', '2024-01-04 08:07:40', 'laptop-hp'),
-(62, 'product', NULL, 'Surface', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/surface-image-show-home-1624951565.jpg\",\"image_background\":\"\\/data\\/cms-image\\/banner\\/banner_2_tab.webp\",\"brief\":{\"vi\":\"Gi\\u1ea3m ngay khi mua online\"},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 1, 1, 'active', 1, 1, '2024-01-04 07:17:54', '2024-01-04 09:08:35', 'surface'),
-(63, 'product', 61, 'Laptop Hp Victus', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/laptop-moi-image-show-home-1624951313.jpg\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'active', 1, 1, '2024-01-05 04:44:14', '2024-01-06 03:43:35', 'laptop-hp-victus'),
-(64, 'product', 61, 'Laptop Hp Omen', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/laptop-moi-image-show-home-1624951313.jpg\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'active', 1, 1, '2024-01-05 04:44:14', '2024-01-06 03:42:34', 'laptop-hp-omen'),
-(65, 'product', 61, 'Laptop HP Pavilion', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/laptop-moi-image-show-home-1624951313.jpg\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'active', 1, 1, '2024-01-05 04:44:14', '2024-01-06 03:43:09', 'laptop-hp-pavilion'),
-(66, 'product', 61, 'Laptop HP Spectre', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/laptop-moi-image-show-home-1624951313.jpg\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'active', 1, 1, '2024-01-05 04:44:14', '2024-01-05 04:44:14', 'laptop-hp-spectre'),
-(67, 'product', 60, 'iMac - Mac Pro - Mini', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/macbook-image-show-home-1624856863.png\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'active', 1, 1, '2024-01-06 03:48:22', '2024-01-06 03:49:56', 'imac-mac-pro-mini'),
-(68, 'product', 60, 'Macbook Air', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/macbook-image-show-home-1624856863.png\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'active', 1, 1, '2024-01-06 03:48:22', '2024-01-06 03:49:30', 'macbook-air'),
-(69, 'product', 60, 'Macbook Pro', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/macbook-image-show-home-1624856863.png\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'active', 1, 1, '2024-01-06 03:48:22', '2024-01-06 03:48:22', 'macbook-pro'),
-(70, 'post', NULL, 'Tin công nghệ', '{\"image\":null,\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'active', 1, 1, '2024-01-07 13:34:11', '2024-01-07 13:34:11', 'tin-cong-nghe'),
-(71, 'post', 70, 'Laptop mới nhất', '{\"image\":null,\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'active', 1, 1, '2024-01-07 13:35:03', '2024-01-07 13:35:15', 'laptop-moi-nhat'),
-(72, 'post', 70, 'Điện thoại mới nhất', '{\"image\":null,\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 'active', 1, 1, '2024-01-07 13:35:44', '2024-01-07 13:35:44', 'dien-thoai-moi-nhat');
+INSERT INTO `tb_cms_taxonomys` (`id`, `taxonomy`, `parent_id`, `title`, `json_params`, `is_featured`, `is_show_home`, `iorder`, `status`, `admin_created_id`, `admin_updated_id`, `created_at`, `updated_at`, `alias`) VALUES
+(1, 'post', NULL, 'Tin tức', '{\"title\":{\"en\":null},\"image\":null,\"image_background\":\"https:\\/\\/jcgroup.vn\\/wp-content\\/uploads\\/2022\\/09\\/01-3.png\",\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, 3, 'active', 1, 1, '2021-10-15 03:19:10', '2023-03-10 07:28:01', 'tin-tuc'),
+(57, 'product', NULL, 'Laptop Gaming', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/icon5.webp\",\"image_background\":\"\\/data\\/cms-image\\/banner\\/banner_3_tab.webp\",\"brief\":{\"vi\":\"Gi\\u1ea3m ngay khi mua online\"},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 1, 1, NULL, 'active', 1, 1, '2024-01-04 03:31:21', '2024-01-29 03:01:48', 'laptop-gaming'),
+(58, 'product', NULL, 'Phụ kiện & thiết bị', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/icon2.webp\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, NULL, 'delete', 1, 1, '2024-01-04 03:38:55', '2024-01-04 09:30:57', 'phu-kien-thiet-bi'),
+(59, 'product', NULL, 'Cammera', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/icon3.webp\",\"image_background\":null,\"brief\":{\"vi\":\"Gi\\u1ea3m ngay khi mua online\"},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, NULL, 'active', 1, 1, '2024-01-04 03:39:13', '2024-01-04 08:20:05', 'cammera'),
+(60, 'product', NULL, 'Macbook', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/macbook-image-show-home-1624856863.png\",\"image_background\":\"\\/data\\/cms-image\\/banner\\/banner_1_tab.jpg\",\"brief\":{\"vi\":\"Gi\\u1ea3m ngay khi mua online\"},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 1, 1, NULL, 'active', 1, 1, '2024-01-04 04:34:19', '2024-01-29 03:01:43', 'macbook'),
+(61, 'product', NULL, 'Laptop HP', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/laptop-moi-image-show-home-1624951313.jpg\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, 1, NULL, 'active', 1, 1, '2024-01-04 07:17:14', '2024-01-29 02:57:07', 'laptop-hp'),
+(62, 'product', NULL, 'Surface', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/surface-image-show-home-1624951565.jpg\",\"image_background\":\"\\/data\\/cms-image\\/banner\\/banner_2_tab.webp\",\"brief\":{\"vi\":\"Gi\\u1ea3m ngay khi mua online\"},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 1, 1, 1, 'active', 1, 1, '2024-01-04 07:17:54', '2024-01-29 03:01:54', 'surface'),
+(63, 'product', 61, 'Laptop Hp Victus', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/laptop-moi-image-show-home-1624951313.jpg\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, NULL, 'active', 1, 1, '2024-01-05 04:44:14', '2024-01-06 03:43:35', 'laptop-hp-victus'),
+(64, 'product', 61, 'Laptop Hp Omen', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/laptop-moi-image-show-home-1624951313.jpg\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, NULL, 'active', 1, 1, '2024-01-05 04:44:14', '2024-01-06 03:42:34', 'laptop-hp-omen'),
+(65, 'product', 61, 'Laptop HP Pavilion', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/laptop-moi-image-show-home-1624951313.jpg\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, NULL, 'active', 1, 1, '2024-01-05 04:44:14', '2024-01-06 03:43:09', 'laptop-hp-pavilion'),
+(66, 'product', 61, 'Laptop HP Spectre', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/laptop-moi-image-show-home-1624951313.jpg\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, 0, NULL, 'active', 1, 1, '2024-01-05 04:44:14', '2024-01-29 03:01:23', 'laptop-hp-spectre'),
+(67, 'product', 60, 'iMac - Mac Pro - Mini', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/macbook-image-show-home-1624856863.png\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, NULL, 'active', 1, 1, '2024-01-06 03:48:22', '2024-01-06 03:49:56', 'imac-mac-pro-mini'),
+(68, 'product', 60, 'Macbook Air', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/macbook-image-show-home-1624856863.png\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, NULL, 'active', 1, 1, '2024-01-06 03:48:22', '2024-01-06 03:49:30', 'macbook-air'),
+(69, 'product', 60, 'Macbook Pro', '{\"image\":\"\\/data\\/cms-image\\/thumb\\/macbook-image-show-home-1624856863.png\",\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, NULL, 'active', 1, 1, '2024-01-06 03:48:22', '2024-01-06 03:48:22', 'macbook-pro'),
+(70, 'post', NULL, 'Tin công nghệ', '{\"image\":null,\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, NULL, 'active', 1, 1, '2024-01-07 13:34:11', '2024-01-07 13:34:11', 'tin-cong-nghe'),
+(71, 'post', 70, 'Laptop mới nhất', '{\"image\":null,\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, NULL, 'active', 1, 1, '2024-01-07 13:35:03', '2024-01-07 13:35:15', 'laptop-moi-nhat'),
+(72, 'post', 70, 'Điện thoại mới nhất', '{\"image\":null,\"image_background\":null,\"brief\":{\"vi\":null},\"content\":{\"vi\":null},\"seo_title\":null,\"seo_keyword\":null,\"seo_description\":null}', 0, NULL, NULL, 'active', 1, 1, '2024-01-07 13:35:44', '2024-01-07 13:35:44', 'dien-thoai-moi-nhat');
 
 -- --------------------------------------------------------
 
@@ -553,16 +554,16 @@ INSERT INTO `tb_cms_taxonomys` (`id`, `taxonomy`, `parent_id`, `title`, `json_pa
 
 CREATE TABLE `tb_components` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `component_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `component_code` varchar(255) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `brief` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `brief` text DEFAULT NULL,
+  `content` longtext DEFAULT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image_background` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `image_background` varchar(255) DEFAULT NULL,
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -591,13 +592,13 @@ INSERT INTO `tb_components` (`id`, `component_code`, `parent_id`, `title`, `brie
 
 CREATE TABLE `tb_component_configs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `component_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `component_code` varchar(255) NOT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
   `is_config` tinyint(1) NOT NULL DEFAULT 1,
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -621,16 +622,16 @@ INSERT INTO `tb_component_configs` (`id`, `name`, `description`, `component_code
 
 CREATE TABLE `tb_contacts` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `is_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'contact',
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `admin_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_type` varchar(255) DEFAULT 'contact',
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `admin_note` text DEFAULT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -662,10 +663,10 @@ CREATE TABLE `tb_logs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `url_referer` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `params` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url_referer` text DEFAULT NULL,
+  `url` text DEFAULT NULL,
+  `method` varchar(255) DEFAULT NULL,
+  `params` text DEFAULT NULL,
   `logged_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -678,14 +679,14 @@ CREATE TABLE `tb_logs` (
 CREATE TABLE `tb_menus` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `parent_id` int(11) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `url_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `menu_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `system_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `url_link` varchar(255) DEFAULT NULL,
+  `menu_type` varchar(255) DEFAULT NULL,
+  `system_code` varchar(255) DEFAULT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -736,11 +737,11 @@ INSERT INTO `tb_menus` (`id`, `parent_id`, `name`, `description`, `url_link`, `m
 
 CREATE TABLE `tb_modules` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `module_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `module_code` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -781,11 +782,11 @@ INSERT INTO `tb_modules` (`id`, `module_code`, `name`, `description`, `iorder`, 
 CREATE TABLE `tb_module_functions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `module_id` bigint(20) UNSIGNED NOT NULL,
-  `function_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `function_code` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -897,9 +898,9 @@ INSERT INTO `tb_module_functions` (`id`, `module_id`, `function_code`, `name`, `
 
 CREATE TABLE `tb_options` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `option_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `option_value` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `option_name` varchar(255) NOT NULL,
+  `option_value` longtext NOT NULL,
+  `description` text DEFAULT NULL,
   `is_system_param` tinyint(1) DEFAULT 1,
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
@@ -926,17 +927,17 @@ INSERT INTO `tb_options` (`id`, `option_name`, `option_value`, `description`, `i
 
 CREATE TABLE `tb_orders` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `is_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'product',
+  `is_type` varchar(255) NOT NULL DEFAULT 'product',
   `customer_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image_cv` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `customer_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `admin_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `image_cv` varchar(255) DEFAULT NULL,
+  `customer_note` text DEFAULT NULL,
+  `admin_note` text DEFAULT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'new',
+  `status` varchar(255) NOT NULL DEFAULT 'new',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -965,10 +966,10 @@ CREATE TABLE `tb_order_details` (
   `quantity` int(11) DEFAULT NULL,
   `price` double(20,2) DEFAULT NULL,
   `discount` double(20,2) DEFAULT NULL,
-  `customer_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `admin_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `customer_note` text DEFAULT NULL,
+  `admin_note` text DEFAULT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -998,16 +999,16 @@ INSERT INTO `tb_order_details` (`id`, `order_id`, `item_id`, `quantity`, `price`
 
 CREATE TABLE `tb_pages` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `keyword` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `content` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `route_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `keyword` text DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `content` longtext DEFAULT NULL,
+  `route_name` varchar(255) NOT NULL,
+  `alias` varchar(255) NOT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1038,14 +1039,14 @@ INSERT INTO `tb_pages` (`id`, `name`, `title`, `keyword`, `description`, `conten
 
 CREATE TABLE `tb_popups` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
   `duration` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1076,7 +1077,7 @@ CREATE TABLE `tb_reviews` (
   `status` varchar(255) NOT NULL DEFAULT 'new',
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1086,11 +1087,11 @@ CREATE TABLE `tb_reviews` (
 
 CREATE TABLE `tb_roles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
   `json_access` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_access`)),
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1113,13 +1114,13 @@ INSERT INTO `tb_roles` (`id`, `name`, `description`, `json_access`, `iorder`, `s
 
 CREATE TABLE `tb_widgets` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `widget_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `brief` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `widget_code` varchar(255) DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `brief` text DEFAULT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1142,13 +1143,13 @@ INSERT INTO `tb_widgets` (`id`, `widget_code`, `title`, `brief`, `json_params`, 
 
 CREATE TABLE `tb_widget_configs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `widget_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `widget_code` varchar(255) NOT NULL,
   `json_params` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`json_params`)),
   `is_config` tinyint(1) NOT NULL DEFAULT 1,
   `iorder` int(11) DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `status` varchar(255) NOT NULL DEFAULT 'active',
   `admin_created_id` bigint(20) UNSIGNED DEFAULT NULL,
   `admin_updated_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1174,26 +1175,26 @@ INSERT INTO `tb_widget_configs` (`id`, `name`, `description`, `widget_code`, `js
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `affiliate_id` int(11) DEFAULT NULL,
-  `affiliate_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `affiliate_code` varchar(255) DEFAULT NULL,
   `total_score` double NOT NULL DEFAULT 0,
   `total_money` double NOT NULL DEFAULT 0,
   `total_payment` double NOT NULL DEFAULT 0,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `user_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_type` varchar(255) DEFAULT NULL,
   `email_verified` tinyint(1) NOT NULL DEFAULT 0,
-  `email_verification_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `email_verification_code` varchar(255) DEFAULT NULL,
+  `status` varchar(255) NOT NULL DEFAULT 'pending',
   `is_super_user` tinyint(1) NOT NULL DEFAULT 0,
-  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
-  `sex` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sex` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
   `count_view_info` int(11) NOT NULL DEFAULT 0,
   `country_id` int(11) DEFAULT NULL,
   `city_id` int(11) DEFAULT NULL,
