@@ -1,11 +1,13 @@
 <?php
   $params_taxonomy['status'] = App\Consts::TAXONOMY_STATUS['active'];
   $params_taxonomy['taxonomy'] = App\Consts::TAXONOMY['product'];
+  $params_taxonomy['is_show_home'] = true;
   $taxonomys = App\Http\Services\ContentService::getCmsTaxonomy($params_taxonomy)->get();
 ?>
 <?php if(isset($taxonomys)): ?>
 <?php $__currentLoopData = $taxonomys; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-  <?php if($item->parent_id == 0 || $item->parent_id == null): ?>
+  
+  <?php if(true): ?>
     <?php
       $title = $item->json_params->title->{$locale} ?? $item->title;
       $brief = $item->json_params->brief->{$locale} ?? $item->brief;

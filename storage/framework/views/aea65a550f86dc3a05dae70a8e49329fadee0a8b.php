@@ -10,7 +10,6 @@
         <div class="swiper-container">
           <div class="swiper-wrapper">
             <?php if(isset($taxonomys)): ?>
-              <?php for($i=0;$i<2;$i++): ?>
                 <?php $__currentLoopData = $taxonomys; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item_sub): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                   <?php
                     $title = $item_sub->json_params->title->{$locale} ?? $item_sub->title;
@@ -30,7 +29,6 @@
                     </div>
                   <?php endif; ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-              <?php endfor; ?>
             <?php endif; ?>  
           </div>
         </div>

@@ -128,6 +128,9 @@ class ContentService
             })
             ->when(!empty($params['is_featured']), function ($query) use ($params) {
                 return $query->where('tb_cms_taxonomys.is_featured', $params['is_featured']);
+            })
+            ->when(!empty($params['is_show_home']), function ($query) use ($params) {
+                return $query->where('tb_cms_taxonomys.is_show_home', $params['is_show_home']);
             });
         if (!empty($params['status'])) {
             $query->where('tb_cms_taxonomys.status', $params['status']);
