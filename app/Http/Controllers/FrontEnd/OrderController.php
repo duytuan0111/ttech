@@ -170,36 +170,37 @@ class OrderController extends Controller
                 // Check and store order_detail
                 $order_detail_params['order_id'] = $order->id;
                 $order_detail_params['item_id'] = $id;
+                $order_detail_params['image'] = $details['image'];
+                $order_detail_params['name_product'] = $details['title'];
                 $order_detail_params['quantity'] = $details['quantity'] ?? 1;
                 $order_detail_params['price'] = $details['price'] ?? null;
                 array_push($data, $order_detail_params);
             }
             OrderDetail::insert($data);
-
             $messageResult = $this->web_information->information->notice_order_cart ?? __('Submit order successfull!');
-
-            // if (isset($this->web_information->information->email)) {
-            //     $email = $this->web_information->information->email;
-            //     Mail::send(
-            //         'frontend.emails.order',
-            //         [
-            //             'order' => $order
-            //         ],
-            //         function ($message) use ($email) {
-            //             $message->to($email);
-            //             $message->subject(__('You received a new order from the system'));
-            //         }
-            //     );
-            // }
-            $email = $request->email;
+            if (isset($this->web_information->information->email)) {
+                $email = $this->web_information->information->email;
                 Mail::send(
                     'frontend.emails.order',
                     [
-                        'order' => $order,
-
+                        'order' => $order
                     ],
                     function ($message) use ($email) {
                         $message->to($email);
+                        $message->subject(__('You received a new order from the system'));
+                    }
+                );
+            }
+            $email2 = $request->email;
+                Mail::send(
+                    'frontend.emails.order_customer',
+                    [
+                        'order' => $order,
+                        'data' => $data,
+
+                    ],
+                    function ($message) use ($email2) {
+                        $message->to($email2);
                         $message->subject(__('[Xác nhận đặt hàng]'));
                     }
                 );
